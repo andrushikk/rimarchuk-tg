@@ -12,6 +12,7 @@
   },
   "keywords": [],
   "author": "",
+  "homepage": "./",
   "license": "ISC",
   "dependencies": {
     "@react-pdf-viewer/core": "^3.12.0",
