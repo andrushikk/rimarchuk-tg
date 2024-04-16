@@ -30,6 +30,7 @@ export default (
 		mode,
 		paths,
 		analyzer: analyzer === 'true',
+
 	});
 
 	return buildConfig

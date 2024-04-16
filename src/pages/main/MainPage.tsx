@@ -26,10 +26,10 @@ const MainPage = () => {
     const [inviteFriend, setInviteFriend] = useState(false)
     /* const [userTokenFetched, setUserTokenFetched] = useState(false);*/
     const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
-    // const userId: number = initDataUnsafe?.user?.id;
-    // const userName: string = initDataUnsafe?.user?.first_name;
-    const userId: number = 5231658595
-    const userName: string = 'Andrey'
+    const userId: number = initDataUnsafe?.user?.id;
+    const userName: string = initDataUnsafe?.user?.first_name;
+    // const userId: number = 5231658595
+    // const userName: string = 'Andrey'
 
     useEffect(() => {
         const handleResize = () => {
