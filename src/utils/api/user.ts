@@ -22,6 +22,11 @@ export const userGet = async (): Promise<UserGet> => {
     return response.data;
 };
 
+export const statPercentGet = async (): Promise<{percent: number}> => {
+    const response = await axios.get(`/api/stat/percent`);
+    return response.data;
+}
+
 export const levelsGet = async (): Promise<{levels: Level[]}> => {
     const response = await axios.get(`/api/levels/getall`);
     return response.data;

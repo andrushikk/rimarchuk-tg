@@ -6,36 +6,19 @@ import { ProgressBar } from '@/modules/progressBar/ProgressBar';
 
 import { StatisticInfoCard } from './StatisticInfoCard';
 import css from './StatisticLevel.module.scss';
+import {statPercentGet} from "@/utils/api/user";
 import {AuthResponse, AuthUser} from "@/utils/types";
 import {useSelector} from "react-redux";
-import axios from "@/axios";
-import {levelsGet} from "@/utils/api/user";
+import cs from "classnames";
 
 export const StatisticLevel = () => {
+    const [statPercent, setStatPercent] = useState(3)
     const authUser: AuthUser = useSelector((state: AuthResponse) => state.auth);
-    const [manual, setManual] = useState({
-        all: 20,
-        current: 3,
-    })
-    const [waterDay, setWaterDay] = useState({
-        all: 20,
-        current: 3,
-    })
 
     useEffect(() => {
         const fetchUser = async () => {
-            let {levels} = await levelsGet()
-            const level = levels.filter(item => item.id === authUser?.user?.[0].lvl_cur)
-            if (authUser.user[0]) {
-                setManual({
-                    all: level[0].quota_manuals,
-                    current: authUser?.user?.[0].lvl_manuals
-                });
-                setWaterDay({
-                    all: level[0].quota_water,
-                    current: authUser?.user?.[0].lvl_wather_day
-                });
-            }
+            const {percent} = await statPercentGet()
+            setStatPercent(percent)
         };
 
         if (authUser.user.length > 0) {
@@ -54,12 +37,12 @@ export const StatisticLevel = () => {
                         </div>
                     </div>
                     <div className={css.completeLevel}>
-                        <div className={css.completeTitle}>Куплен {manual.current}/{manual.all} методичек</div>
-                        <ProgressBar percent={manual.current / manual.all * 100}/>
-                    </div>
-                    <div className={css.completeLevel}>
-                        <div className={css.completeTitle}>{waterDay.current}/{waterDay.all} дней подряд заполняется трекер воды</div>
-                        <ProgressBar percent={waterDay.current / waterDay.all * 100}/>
+                        <div className={css.completeTitle}>До следующего уровня выполнено:</div>
+                        <div className={css.completePercent}>
+                            <div className={css.completeNumber} style={{width: `${statPercent}%`}}>
+                                <span className={css.number}>{statPercent}</span>
+                            </div>
+                        </div>
                     </div>
                     <Link to="/tasks" className={css.watchQuestion}>
                         <div className={css.watchText}>Смотреть задания</div>
