@@ -12,26 +12,16 @@ import { BookCard } from './parts/BookCard';
 
 export const data: IBookBlock[] = [
     {
-        id: '1',
-        link: true,
+        id: '4',
+        book: true,
         bonus: false,
-        book: false,
         title: (
-            <div>
-                <span className={css.bookTitleCard}>I’M LEGEND</span>
-            </div>
+          <div>
+              Книга <span className={css.bookPart}>«Будь здоровым сейчас» </span>+личная консультация
+          </div>
         ),
-        description: 'Твоё перерождение',
-        image: bookOneSrc,
-    },
-    {
-        id: '2',
-        link: false,
-        bonus: false,
-        book: false,
-        title: 'Личная консультация от Марины Римарчук',
-        contentTitle: 'ЛИЧНАЯ ПРОГРАММА БЕЗ СОПРОВОЖДЕНИЯ ',
-        contentInfo: '(Детская или взрослая)',
+        contentTitle: 'Книга «Будь здоровым сейчас» + личная консультация',
+        contentInfo: 'Консультация в подарок:\n' + 'Детская или взрослая (Стоимостью 5000 ₽)',
         contentList: [
             {
                 title: 'разбор/назначение анализов',
@@ -46,13 +36,55 @@ export const data: IBookBlock[] = [
                 title: 'рекомендации по питанию',
             },
         ],
-        descriptionPrice: 'Стоимость',
+        descriptionPrice: 'Стоимость печатной книги + консультации',
         price: '5 990 ₽',
-        buttonText: 'Стоимость',
+        buttonText: 'Стоимость печатной книги + консультации',
         buttonBuy: 'Купить',
         description: 'Энергию и ресурс не надо искать - это есть в нашем теле.',
-        image: bookTwoSrc,
+        image: bookFourSrc,
     },
+    {
+        id: '1',
+        link: true,
+        bonus: false,
+        book: false,
+        title: (
+            <div>
+                <span className={css.bookTitleCard}>I’M LEGEND</span>
+            </div>
+        ),
+        description: 'Твоё перерождение',
+        image: bookOneSrc,
+    },
+    // {
+    //     id: '2',
+    //     link: false,
+    //     bonus: false,
+    //     book: false,
+    //     title: 'Личная консультация от Марины Римарчук',
+    //     contentTitle: 'ЛИЧНАЯ ПРОГРАММА БЕЗ СОПРОВОЖДЕНИЯ ',
+    //     contentInfo: '(Детская или взрослая)',
+    //     contentList: [
+    //         {
+    //             title: 'разбор/назначение анализов',
+    //         },
+    //         {
+    //             title: 'индивидуальный подбор схемы восстановления здоровья',
+    //         },
+    //         {
+    //             title: 'рекомендации по витаминам и добавкам',
+    //         },
+    //         {
+    //             title: 'рекомендации по питанию',
+    //         },
+    //     ],
+    //     descriptionPrice: 'Стоимость',
+    //     price: '5 990 ₽',
+    //     buttonText: 'Стоимость',
+    //     buttonBuy: 'Купить',
+    //     description: 'Энергию и ресурс не надо искать - это есть в нашем теле.',
+    //     image: bookTwoSrc,
+    // },
     {
         id: '3',
         link: false,
@@ -84,38 +116,6 @@ export const data: IBookBlock[] = [
         buttonBuy: 'Купить',
         description: 'Энергию и ресурс не надо искать - это есть в нашем теле.',
         image: bookThree,
-    },
-    {
-        id: '4',
-        book: true,
-        bonus: false,
-        title: (
-            <div>
-                Книга <span className={css.bookPart}>«Будь здоровым сейчас» </span>+личная консультация
-            </div>
-        ),
-        contentTitle: 'Книга «Будь здоровым сейчас» + личная консультация',
-        contentInfo: 'Консультация в подарок:\n' + 'Детская или взрослая (Стоимостью 5000 ₽)',
-        contentList: [
-            {
-                title: 'разбор/назначение анализов',
-            },
-            {
-                title: 'индивидуальный подбор схемы восстановления здоровья',
-            },
-            {
-                title: 'рекомендации по витаминам и добавкам',
-            },
-            {
-                title: 'рекомендации по питанию',
-            },
-        ],
-        descriptionPrice: 'Стоимость печатной книги + консультации',
-        price: '5 990 ₽',
-        buttonText: 'Стоимость печатной книги + консультации',
-        buttonBuy: 'Купить',
-        description: 'Энергию и ресурс не надо искать - это есть в нашем теле.',
-        image: bookFourSrc,
     },
 ];
 

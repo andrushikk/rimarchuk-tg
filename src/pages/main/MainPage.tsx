@@ -23,13 +23,12 @@ import InviteFriend from "@/pages/main/components/InviteFriend";
 const MainPage = () => {
     const { initDataUnsafe } = useTelegram();
     const [isMobile, setIsMobile] = useState(window.innerWidth < 500);
-    const [inviteFriend, setInviteFriend] = useState(false)
     /* const [userTokenFetched, setUserTokenFetched] = useState(false);*/
     const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
-    const userId: number = initDataUnsafe?.user?.id;
-    const userName: string = initDataUnsafe?.user?.first_name;
-    // const userId: number = 5231658595
-    // const userName: string = 'Andrey'
+    // const userId: number = initDataUnsafe?.user?.id;
+    // const userName: string = initDataUnsafe?.user?.first_name;
+    const userId: number = 514328131
+    const userName: string = 'Andrey'
 
     useEffect(() => {
         const handleResize = () => {
@@ -90,20 +89,12 @@ const MainPage = () => {
         };
 
         if (authUser.user.length > 0) {
-            if (!authUser.user[0].wather_block) {
-                setInviteFriend(true)
-            } else if (inviteFriend) {
-                setInviteFriend(false)
-            }
             fetchUser();
         }
     }, [authUser.user, dispatch]);
 
     return (
       <div className={css.container}>
-          {
-              inviteFriend ? <InviteFriend/> : null
-          }
           <div>
               <AffirmationDay/>
               <WaterTracker authUser={authUser}/>

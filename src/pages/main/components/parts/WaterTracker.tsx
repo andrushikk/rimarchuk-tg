@@ -16,11 +16,12 @@ import { getUser } from '@/store/currentUserSlice';
 import { addVolumeWater } from '@/store/waterAddSlice';
 import { getWater } from '@/store/waterGetSlice';
 import { useBackButton } from '@/utils/hooks/useBackButton';
-import { UserGet, UserGetResponse } from '@/utils/types';
+import {AuthResponse, AuthUser, UserGet, UserGetResponse} from '@/utils/types';
 import { GetWaterResponse, WaterData } from '@/utils/types/water';
 
 import css from './WaterTracker.module.scss';
 import { WaterVolume } from './WaterVolume';
+import InviteFriend from "@/pages/main/components/InviteFriend";
 
 const MAX_SIZE = 2560;
 const CONTAINER_HEIGHT_PX = 238;
@@ -34,6 +35,7 @@ export const WaterTracker = () => {
     const currentUser: UserGet = useSelector((state: UserGetResponse) => state.currentUser);
 
     const [sliderValue, setSliderValue] = useState(waterVolume.data.data);
+    const [inviteFriend, setInviteFriend] = useState(false)
 
     useEffect(() => {
         setSliderValue(waterVolume.data.data)
@@ -66,6 +68,10 @@ export const WaterTracker = () => {
     }
     const handlePostSliderValue = () => {
         const fetchGetWater = async () => {
+            if (!currentUser.data.wather_block) {
+                setInviteFriend(true)
+                return
+            }
             await dispatch(addVolumeWater(sliderValue))
             await dispatch(getWater());
             await dispatch(getUser());
@@ -81,6 +87,9 @@ export const WaterTracker = () => {
 
     return (
         <div className={css.waterTrackerWrapper}>
+            {
+                inviteFriend ? <InviteFriend closeModal={() => setInviteFriend(false)}/> : null
+            }
             <WaterWaveImage />
             <div className={css.waterTracker}>
                 <HeaderPage title="Вода" className={css.waterHeader} />

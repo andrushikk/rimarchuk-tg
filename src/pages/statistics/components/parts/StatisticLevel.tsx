@@ -40,7 +40,7 @@ export const StatisticLevel = () => {
                         <div className={css.completeTitle}>До следующего уровня выполнено:</div>
                         <div className={css.completePercent}>
                             <div className={css.completeNumber} style={{width: `${statPercent}%`}}>
-                                <span className={css.number}>{statPercent}</span>
+                                <span className={css.number}>{statPercent}%</span>
                             </div>
                         </div>
                     </div>
