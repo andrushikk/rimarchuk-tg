@@ -1,0 +1,15 @@
+.podcastsBlock {
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  margin-top: 30px;
+
+  .resetStyle {
+    color: #FFF;
+    text-decoration: none;
+  }
+}
+
+:global(.slick-slide) > div {
+  margin-right: 12px;
+}

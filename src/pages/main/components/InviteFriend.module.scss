@@ -1,0 +1,40 @@
+.inviteFriend {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 100000;
+}
+.inviteContent {
+  max-width: 562px;
+  padding: 30px 16px;
+  margin: 0 auto;
+}
+.inviteTitle {
+  font-family: "Playfair Display", serif;
+  font-size: 22px;
+  padding-bottom: 10px;
+}
+.inviteText {
+  font-family: "Playfair Display", serif;
+  font-size: 16px;
+  padding-bottom: 25px;
+}
+.inviteBtn {
+  margin: 10px 0;
+  display: flex;
+  justify-content: center;
+  border-radius: 16px;
+  background: #2545ED;
+  padding: 17px 16px;
+  align-items: center;
+
+  .inviteBtnText {
+    color: #FFF;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.32px;
+  }
+}
