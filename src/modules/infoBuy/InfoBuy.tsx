@@ -107,8 +107,8 @@ export const InfoBuy: FC<InfoBuyProps> = (props) => {
                                 {isShowManual && manual.data ? `${manual.data.cost}₽` : null}
                             </div>
                         </div>
-                        <div className={css.contentCostPrice}>{isShowBook && `${infoBuy.price} ₽`}</div>
-                        <div className={css.contentCostPrice}>{isShowCourse && `${infoBuy.price} ₽`}</div>
+                        <div className={css.contentCostPrice}>{isShowBook && `${infoBuy.price}`}</div>
+                        <div className={css.contentCostPrice}>{isShowCourse && `${infoBuy.price}`}</div>
                     </div>
                 </button>
             ) : null}

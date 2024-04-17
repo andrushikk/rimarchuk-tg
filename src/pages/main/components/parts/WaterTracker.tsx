@@ -71,6 +71,8 @@ export const WaterTracker = () => {
             if (!currentUser.data.wather_block) {
                 setInviteFriend(true)
                 return
+            } else {
+                setInviteFriend(false)
             }
             await dispatch(addVolumeWater(sliderValue))
             await dispatch(getWater());
@@ -79,11 +81,6 @@ export const WaterTracker = () => {
 
         fetchGetWater()
     }
-
-    // const handleSliderMouseDown = (e: BaseSyntheticEvent) => {
-    //     const value = e.target.value ?? 0;
-    //     setAdjustedHeight((value / MAX_SIZE) * CONTAINER_HEIGHT_PX);
-    // };
 
     return (
         <div className={css.waterTrackerWrapper}>
