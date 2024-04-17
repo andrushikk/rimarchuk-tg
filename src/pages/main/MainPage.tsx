@@ -25,10 +25,10 @@ const MainPage = () => {
     const [isMobile, setIsMobile] = useState(window.innerWidth < 500);
     /* const [userTokenFetched, setUserTokenFetched] = useState(false);*/
     const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
-    const userId: number = initDataUnsafe?.user?.id;
-    const userName: string = initDataUnsafe?.user?.first_name;
-    // const userId: number = 514328131
-    // const userName: string = 'Andrey'
+    // const userId: number = initDataUnsafe?.user?.id;
+    // const userName: string = initDataUnsafe?.user?.first_name;
+    const userId: number = 514328131
+    const userName: string = 'Andrey'
 
     useEffect(() => {
         const handleResize = () => {
