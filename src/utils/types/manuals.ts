@@ -24,6 +24,7 @@ export type Manuals = {
     id: string | number;
     title?: string;
     bonus?: boolean;
+    is_block?: 0 | 1;
     contentTitle?: string;
     book?: boolean;
     contentInfo?: string;

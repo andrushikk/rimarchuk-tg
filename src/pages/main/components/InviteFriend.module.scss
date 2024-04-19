@@ -38,3 +38,19 @@
     letter-spacing: -0.32px;
   }
 }
+.inviteCloseBtn {
+  margin: 10px 0;
+  display: flex;
+  justify-content: center;
+  border-radius: 16px;
+  background: rgba(100, 124, 239, 0.4);
+  padding: 17px 16px;
+  align-items: center;
+
+  .inviteBtnText {
+    color: #FFF;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.32px;
+  }
+}

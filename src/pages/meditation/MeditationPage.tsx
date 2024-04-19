@@ -22,8 +22,6 @@ export const MeditationPage: FC<MeditationPageProps> = () => {
 
     const allMeditations: AllMeditations = useSelector((state: AllMeditationsResponse) => state.meditations);
 
-    //console.log(allMeditations.data, 'allMeditations');
-
     useEffect(() => {
         dispatch(getMeditationsAll());
     }, []);

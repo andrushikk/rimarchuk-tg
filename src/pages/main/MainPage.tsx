@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { ThunkDispatch } from '@reduxjs/toolkit';
@@ -19,16 +19,19 @@ import { AffirmationDay } from './components/AffirmationDay';
 import { BookBlock } from './components/BookBlock';
 import { WaterTracker } from './components/WaterTracker';
 import InviteFriend from "@/pages/main/components/InviteFriend";
+import PreviewVideo from "@/components/PreviewVideo/PreviewVideo";
 
 const MainPage = () => {
     const { initDataUnsafe } = useTelegram();
     const [isMobile, setIsMobile] = useState(window.innerWidth < 500);
-    /* const [userTokenFetched, setUserTokenFetched] = useState(false);*/
     const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
-    // const userId: number = initDataUnsafe?.user?.id;
-    // const userName: string = initDataUnsafe?.user?.first_name;
-    const userId: number = 514328131
-    const userName: string = 'Andrey'
+    const userId: number = initDataUnsafe?.user?.id;
+    const userName: string = initDataUnsafe?.user?.first_name;
+    // const userId: number = 5231658595
+    // const userName: string = 'Andrey'
+
+    const authUser: AuthUser = useSelector((state: AuthResponse) => state.auth);
+    const allUsers: AllUsers = useSelector((state: UserResponse) => state.user);
 
     useEffect(() => {
         const handleResize = () => {
@@ -41,11 +44,6 @@ const MainPage = () => {
             window.removeEventListener('resize', handleResize);
         };
     }, []);
-
-    //console.log(initDataUnsafe?.user, 'initDataUnsafe?.user');
-
-    const authUser: AuthUser = useSelector((state: AuthResponse) => state.auth);
-    const allUsers: AllUsers = useSelector((state: UserResponse) => state.user);
 
     useEffect(() => {
         if (!allUsers.data.length) {
@@ -73,13 +71,6 @@ const MainPage = () => {
         fetchData();
     }, [dispatch, allUsers.data, userId, userName]);
 
-    // useEffect(() => {
-    //     const fetchAllData = async () => {
-    //         await Promise.all([dispatch(authToken(Number(userId)))]);
-    //     };
-    //     fetchAllData();
-    // }, [dispatch, userId]);
-
     useEffect(() => {
         const fetchUser = async () => {
             if (authUser.user[0]) {
@@ -96,6 +87,7 @@ const MainPage = () => {
     return (
       <div className={css.container}>
           <div>
+              <PreviewVideo />
               <AffirmationDay/>
               <WaterTracker authUser={authUser}/>
               <BookBlock/>

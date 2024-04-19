@@ -33,6 +33,7 @@ export const WaterTracker = () => {
 
     const waterVolume = useSelector((state: GetWaterResponse) => state.waterGet);
     const currentUser: UserGet = useSelector((state: UserGetResponse) => state.currentUser);
+    const authUser: AuthUser = useSelector((state: AuthResponse) => state.auth);
 
     const [sliderValue, setSliderValue] = useState(waterVolume.data.data);
     const [inviteFriend, setInviteFriend] = useState(false)
@@ -79,7 +80,7 @@ export const WaterTracker = () => {
             await dispatch(getUser());
         };
 
-        fetchGetWater()
+        if (authUser.user[0]) fetchGetWater()
     }
 
     return (

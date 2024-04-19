@@ -9,6 +9,8 @@ import DownloadBook from '@/assets/images/manuals/download.svg';
 import { Manuals } from '@/utils/types/manuals';
 
 import css from './ManualCard.module.scss';
+import axios from "@/axios";
+import {useTelegram} from "@/utils/hooks/useTelegram";
 
 export type ManualCardProps = Manuals & {
     index?: number;
@@ -17,11 +19,17 @@ export type ManualCardProps = Manuals & {
 };
 
 export const ManualCard: FC<ManualCardProps> = (props) => {
-    const { name, description, cost, id } = props;
+    const { close } = useTelegram()
+    const { name, description, cost, id, is_block } = props;
+
+    const handleManual = () => {
+        axios.post(`https://api-wather.plutus-fin.ru/api/bot/sendmanual?manualID=${id}`)
+        close()
+    }
 
     return (
         <div className={css.manualCard}>
-            <Link to={`/manual/${id}`} className={css.manualLink}>
+            <Link to={is_block ? `/manual/${id}` : '#'} onClick={handleManual} className={css.manualLink}>
                 <div className={cs(css.iconColumn, css.manualIcon)}>
                     <ManualBook />
                 </div>

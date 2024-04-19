@@ -16,10 +16,6 @@ export type VideoBlockProps = any;
 export const VideoBlock: FC<VideoBlockProps> = () => {
     const allVideos: AllVideos = useSelector((state: AllVideosResponse) => state.videos);
 
-  useEffect(() => {
-    console.log(allVideos)
-  }, [allVideos]);
-
     return (
         <div className={css.videoBlock}>
           <Link to="/videos" className={css.resetStyle}>

@@ -31,9 +31,14 @@ export const InfoBuy: FC<InfoBuyProps> = (props) => {
     const { children, isShowBook, isShowManual, isShowCourse, infoBuy, id } = props;
     const [courseIdList, setCourseIdList] = useState([]);
     const [isIdInCourseIdList, setIsIdInCourseIdList] = useState(false);
-    useBackButton('/');
-    //console.log(id, '222');
     const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
+
+    useBackButton('/');
+
+    const manual = useSelector((state: ManualsGetResponse) => state.manualsGet);
+
+    const courseId = useSelector((state: GetCheckPayResponse) => state.checkPay.data.course_id);
+
     useEffect(() => {
         const fetchManualGet = async () => {
             await dispatch(manualsGet(+id));
@@ -41,12 +46,6 @@ export const InfoBuy: FC<InfoBuyProps> = (props) => {
 
         fetchManualGet();
     }, [id, dispatch]);
-
-    console.log(infoBuy, 'mmmm');
-
-    const manual = useSelector((state: ManualsGetResponse) => state.manualsGet);
-
-    const courseId = useSelector((state: GetCheckPayResponse) => state.checkPay.data.course_id);
 
     useEffect(() => {
         if (courseId) {
@@ -131,7 +130,7 @@ export const InfoBuy: FC<InfoBuyProps> = (props) => {
                 </Link>
             ) : null}
 
-            {infoBuy.book && <PDFViewer pdfUrl="https://content-water.plutus-fin.ru/books/book_1.pdf" />}
+            {infoBuy.book && <PDFViewer pdfUrl="https://content-water.plutus-fin.ru/books/book_1prev.pdf" />}
         </div>
     );
 };

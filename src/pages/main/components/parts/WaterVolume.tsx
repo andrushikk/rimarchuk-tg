@@ -6,7 +6,7 @@ import { ThunkDispatch } from '@reduxjs/toolkit';
 import WaterIcon from '@/assets/images/waterTracker/waterIcon.svg';
 import { getUser } from '@/store/currentUserSlice';
 import { getWater } from '@/store/waterGetSlice';
-import { AuthUser } from '@/utils/types';
+import {AuthResponse, AuthUser} from '@/utils/types';
 import { GetWaterResponse, WaterData } from '@/utils/types/water';
 
 import css from './WaterVolume.module.scss';
@@ -21,6 +21,7 @@ export const WaterVolume = (props: WaterVolumeProps) => {
 
     const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
     const waterVolume: WaterData = useSelector((state: GetWaterResponse) => state.waterGet);
+    const authUser: AuthUser = useSelector((state: AuthResponse) => state.auth);
 
     useEffect(() => {
         const fetchGetWater = async () => {
@@ -28,8 +29,8 @@ export const WaterVolume = (props: WaterVolumeProps) => {
             await dispatch(getUser());
         };
 
-        fetchGetWater();
-    }, []);
+        if (authUser.user[0]) fetchGetWater();
+    }, [authUser.user]);
 
     return (
         <div className={css.trackerInfo}>

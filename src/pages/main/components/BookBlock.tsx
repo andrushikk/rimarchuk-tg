@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
 import bookOneSrc from '@/assets/images/bookBlock/book.png';
 import bookFourSrc from '@/assets/images/bookBlock/bookFour.png';
@@ -56,35 +56,6 @@ export const data: IBookBlock[] = [
         description: 'Твоё перерождение',
         image: bookOneSrc,
     },
-    // {
-    //     id: '2',
-    //     link: false,
-    //     bonus: false,
-    //     book: false,
-    //     title: 'Личная консультация от Марины Римарчук',
-    //     contentTitle: 'ЛИЧНАЯ ПРОГРАММА БЕЗ СОПРОВОЖДЕНИЯ ',
-    //     contentInfo: '(Детская или взрослая)',
-    //     contentList: [
-    //         {
-    //             title: 'разбор/назначение анализов',
-    //         },
-    //         {
-    //             title: 'индивидуальный подбор схемы восстановления здоровья',
-    //         },
-    //         {
-    //             title: 'рекомендации по витаминам и добавкам',
-    //         },
-    //         {
-    //             title: 'рекомендации по питанию',
-    //         },
-    //     ],
-    //     descriptionPrice: 'Стоимость',
-    //     price: '5 990 ₽',
-    //     buttonText: 'Стоимость',
-    //     buttonBuy: 'Купить',
-    //     description: 'Энергию и ресурс не надо искать - это есть в нашем теле.',
-    //     image: bookTwoSrc,
-    // },
     {
         id: '3',
         link: false,
@@ -120,9 +91,19 @@ export const data: IBookBlock[] = [
 ];
 
 export const BookBlock = () => {
+    const [speed, setSpeed] = useState(17000)
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            setSpeed(10000)
+        }, 17100)
+
+        return () => {
+            clearTimeout(timeout)
+        }
+    }, []);
     return (
         <div className={css.bookBlock}>
-            <CardSlider slidesToShowMobile={1.05} slidesToShow={1.05}>
+            <CardSlider slidesToShowMobile={1.05} slidesToShow={1.05} autoplay={true} speed={speed}>
                 {data?.map((item, index) => (
                     <BookCard key={item.id} {...item} index={index} />
                 ))}

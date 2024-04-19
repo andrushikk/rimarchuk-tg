@@ -32,8 +32,6 @@ export const ManualInfo: FC<ManualInfoProps> = () => {
     const id = Number(matchManual?.params.id);
     const manualInfo = allManuals.data.find((item) => +item.id === +id);
 
-    console.log(id, 'ManualInfo');
-
     const manualsId = useSelector((state: GetCheckPayResponse) => state.checkPay.data.manuals_id);
 
     useEffect(() => {

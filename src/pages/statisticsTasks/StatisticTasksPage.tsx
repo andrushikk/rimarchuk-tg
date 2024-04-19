@@ -5,7 +5,6 @@ import { AccordionComponent } from '@/modules/accordion/AccordionComponent';
 import { HeaderPage } from '@/modules/header/components/HeaderPage';
 import { ProgressBar } from '@/modules/progressBar/ProgressBar';
 import { useBackButton } from '@/utils/hooks/useBackButton';
-import { IAccordionContent } from '@/utils/types/statistic';
 
 import css from './StatisticTasksPage.module.scss';
 import {useEffect, useState} from "react";

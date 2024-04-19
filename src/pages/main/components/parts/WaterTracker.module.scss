@@ -2,19 +2,6 @@
   display: flex;
   flex-direction: column;
   position: relative;
-  padding-bottom: 80px;
-
-  &::after {
-    content: "";
-    background-color: #122276;
-    position: absolute;
-    bottom: -100%;
-    left: -24px;
-    width: calc(100% + 48px);
-    height: 100%;
-    z-index: -1;
-    transform: translateY(30%);
-  }
 
   .background {
     position: absolute;

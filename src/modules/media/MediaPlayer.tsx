@@ -49,7 +49,8 @@ export const MediaPlayer: FC<MediaPlayerProps> = (props) => {
     }, [isPlaying, duration]);
 
     useEffect(() => {
-        const interval = setInterval(() => {
+        // console.log(sound.playing)
+        // const interval = setInterval(() => {
             if (sound && sound.playing) {
                 setSeconds(sound.seek([]));
                 const min = Math.floor(sound.seek([]) / 60);
@@ -60,8 +61,8 @@ export const MediaPlayer: FC<MediaPlayerProps> = (props) => {
                 });
                 setLoading(false)
             }
-        }, 1000);
-        return () => clearInterval(interval);
+        // }, 1000);
+        // return () => clearInterval(interval);
     }, [sound]);
 
     const playingButton = () => {
