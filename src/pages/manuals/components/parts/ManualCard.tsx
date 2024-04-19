@@ -38,7 +38,7 @@ export const ManualCard: FC<ManualCardProps> = (props) => {
                         <div className={css.title}>{name}</div>
                         <div className={css.description}>{description}</div>
                     </div>
-                    <div className={cs(css.iconColumn, css.downloadIcon)}>{cost ? <BuyBook /> : <DownloadBook />}</div>
+                    <div className={cs(css.iconColumn, css.downloadIcon)}>{is_block ? <BuyBook /> : <DownloadBook />}</div>
                 </div>
             </Link>
         </div>
