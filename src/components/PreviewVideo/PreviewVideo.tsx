@@ -13,7 +13,7 @@ const VideoPreview = () => {
 
   return (
     <video className={`${css.preview} ${hidden ? css.hidden : ''}`} id="introVideo" autoPlay muted>
-      <source src='/intro.mp4' type="video/mp4" />
+      <source src='/intro.webm' type="video/mp4" />
       Ваш браузер не поддерживает воспроизведение видео.
     </video>
   );
