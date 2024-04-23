@@ -87,7 +87,7 @@ const MainPage = () => {
     return (
       <div className={css.container}>
           <div>
-              <PreviewVideo />
+              {/*<PreviewVideo />*/}
               <AffirmationDay/>
               <WaterTracker authUser={authUser}/>
               <BookBlock/>
