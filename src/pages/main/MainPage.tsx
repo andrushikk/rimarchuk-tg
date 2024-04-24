@@ -25,10 +25,10 @@ const MainPage = () => {
     const { initDataUnsafe } = useTelegram();
     const [isMobile, setIsMobile] = useState(window.innerWidth < 500);
     const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
-    const userId: number = initDataUnsafe?.user?.id;
-    const userName: string = initDataUnsafe?.user?.first_name;
-    // const userId: number = 5231658595
-    // const userName: string = 'Andrey'
+    // const userId: number = initDataUnsafe?.user?.id;
+    // const userName: string = initDataUnsafe?.user?.first_name;
+    const userId: number = 5231658595
+    const userName: string = 'Andrey'
 
     const authUser: AuthUser = useSelector((state: AuthResponse) => state.auth);
     const allUsers: AllUsers = useSelector((state: UserResponse) => state.user);

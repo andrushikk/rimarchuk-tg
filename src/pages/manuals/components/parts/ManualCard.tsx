@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Link } from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 
 import cs from 'classnames';
 
@@ -21,15 +21,20 @@ export type ManualCardProps = Manuals & {
 export const ManualCard: FC<ManualCardProps> = (props) => {
     const { close } = useTelegram()
     const { name, description, cost, id, is_block } = props;
+    const navigate = useNavigate()
 
     const handleManual = () => {
+        if (is_block) {
+            navigate(`/manual/${id}`)
+            return
+        }
         axios.post(`https://api-wather.plutus-fin.ru/api/bot/sendmanual?manualID=${id}`)
         close()
     }
 
     return (
         <div className={css.manualCard}>
-            <Link to={is_block ? `/manual/${id}` : '#'} onClick={handleManual} className={css.manualLink}>
+            <div onClick={handleManual} className={css.manualLink}>
                 <div className={cs(css.iconColumn, css.manualIcon)}>
                     <ManualBook />
                 </div>
@@ -40,7 +45,7 @@ export const ManualCard: FC<ManualCardProps> = (props) => {
                     </div>
                     <div className={cs(css.iconColumn, css.downloadIcon)}>{is_block ? <BuyBook /> : <DownloadBook />}</div>
                 </div>
-            </Link>
+            </div>
         </div>
     );
 };
