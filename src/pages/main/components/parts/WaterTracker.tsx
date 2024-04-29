@@ -1,26 +1,24 @@
-import React, { BaseSyntheticEvent, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, {BaseSyntheticEvent, useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 
-import { ThunkDispatch } from '@reduxjs/toolkit';
+import {ThunkDispatch} from '@reduxjs/toolkit';
 import cs from 'classnames';
-import Cookies from 'js-cookie';
 
 import CupIcon from '@/assets/images/actionGlass/cup.svg';
 import CupBlackIcon from '@/assets/images/actionGlass/cupBlack.svg';
 import MinusIcon from '@/assets/images/actionGlass/minus.svg';
 import PlusIcon from '@/assets/images/actionGlass/plus.svg';
-import { HeaderPage } from '@/modules/header/components/HeaderPage';
+import {HeaderPage} from '@/modules/header/components/HeaderPage';
 import WaterWaveImage from '@/pages/main/components/parts/WaterWaveImage';
-import { getCheckPay } from '@/store/checkPaySlice';
-import { getUser } from '@/store/currentUserSlice';
-import { addVolumeWater } from '@/store/waterAddSlice';
-import { getWater } from '@/store/waterGetSlice';
-import { useBackButton } from '@/utils/hooks/useBackButton';
+import {getUser} from '@/store/currentUserSlice';
+import {addVolumeWater} from '@/store/waterAddSlice';
+import {getWater} from '@/store/waterGetSlice';
+import {useBackButton} from '@/utils/hooks/useBackButton';
 import {AuthResponse, AuthUser, UserGet, UserGetResponse} from '@/utils/types';
-import { GetWaterResponse, WaterData } from '@/utils/types/water';
+import {GetWaterResponse} from '@/utils/types/water';
 
 import css from './WaterTracker.module.scss';
-import { WaterVolume } from './WaterVolume';
+import {WaterVolume} from './WaterVolume';
 import InviteFriend from "@/pages/main/components/InviteFriend";
 
 const MAX_SIZE = 2560;
