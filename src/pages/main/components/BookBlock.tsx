@@ -91,11 +91,11 @@ export const data: IBookBlock[] = [
 ];
 
 export const BookBlock = () => {
-    const [speed, setSpeed] = useState(3000)
+    const [speed, setSpeed] = useState(17000)
     useEffect(() => {
         const timeout = setTimeout(() => {
             setSpeed(10000)
-        }, 4000)
+        }, 18000)
 
         return () => {
             clearTimeout(timeout)

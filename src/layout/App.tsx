@@ -7,6 +7,7 @@ import { useTelegram } from '@/utils/hooks/useTelegram';
 import { ErrorCatch } from '../components/ErrorCatch';
 import { store } from '../store';
 import { router } from './AppRoutes';
+import PreviewVideo from "@/components/PreviewVideo/PreviewVideo";
 
 export const App = () => {
     const { expand } = useTelegram();
@@ -18,6 +19,7 @@ export const App = () => {
     return (
         <ErrorCatch>
             <Provider store={store}>
+                <PreviewVideo />
                 <RouterProvider router={router} />
             </Provider>
         </ErrorCatch>

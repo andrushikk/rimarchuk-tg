@@ -59,6 +59,7 @@ export const MediaPlayer: FC<MediaPlayerProps> = (props) => {
                     min: `${min}`,
                     sec: `${sec}`,
                 });
+                console.log('st')
                 setLoading(false)
             }
         // }, 1000);
