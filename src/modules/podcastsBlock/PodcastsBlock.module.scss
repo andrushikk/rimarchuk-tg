@@ -1,7 +1,4 @@
 .podcastsBlock {
-  display: flex;
-  flex-direction: column;
-  border-radius: 20px;
   margin-top: 30px;
 
   .resetStyle {
@@ -10,6 +7,8 @@
   }
 }
 
-:global(.slick-slide) > div {
-  margin-right: 12px;
+div.slider {
+  margin-right: -5%;
+  margin-left: -5%;
+  padding-left: 5%;
 }

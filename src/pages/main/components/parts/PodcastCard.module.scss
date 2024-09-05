@@ -1,5 +1,5 @@
 .podcastCardWrapper {
-  display: flex;
+  display: block;
 
   .podcastCard {
     position: relative;
@@ -18,6 +18,22 @@
     &[data-index="1"], &[data-index="3"] {
       background:  radial-gradient(circle at top left, #242C7F, #22266D 10%, transparent 65%),
       url("../../../../assets/images/podcastsCard/podcastTwo.png") center center / cover no-repeat;
+    }
+
+    &[data-index="5"], &[data-index="7"] {
+      background:  radial-gradient(circle at top left, #242C7F, #22266D 10%, transparent 65%),
+      url("../../../../assets/images/podcastsCard/podcastBack.png") center center / cover no-repeat;
+    }
+
+    &[data-index="4"], &[data-index="6"] {
+      background:  radial-gradient(circle at top left, #242C7F, #22266D 10%, transparent 65%),
+      url("../../../../assets/images/podcastsCard/podcastTwo.png") center center / cover no-repeat;
+    }
+
+    
+    &[data-index="8"], &[data-index="9"] {
+      background:  radial-gradient(circle at top left, #242C7F, #22266D 10%, transparent 65%),
+      url("../../../../assets/images/podcastsCard/podcastBack.png") center center / cover no-repeat;
     }
 
     .cardTitle {
@@ -40,7 +56,6 @@
       bottom: 8px;
       height: 80px;
     }
-
 
     .podcastTitleCard {
       font-size: 12px;
