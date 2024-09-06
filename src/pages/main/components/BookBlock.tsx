@@ -159,38 +159,6 @@ export const data: IBookBlock[] = [
         description: 'Твоё перерождение',
         image: bookOneSrc,
     },
-    {
-        id: '3',
-        link: false,
-        book: false,
-        bonus: true,
-        title: 'Личная консультация от Марины Римарчук',
-        contentTitle: 'ЛИЧНАЯ ПРОГРАММА С СОПРОВОЖДЕНИЕМ 1 МЕСЯЦ',
-        contentInfo: '(Детская или взрослая)',
-        contentList: [
-            {
-                title: 'разбор/назначение анализов',
-            },
-            {
-                title: 'индивидуальный подбор схемы восстановления здоровья',
-            },
-            {
-                title: 'рекомендации по витаминам и добавкам',
-            },
-            {
-                title: 'рекомендации по питанию',
-            },
-            {
-                title: 'коррекция программы по необходимости',
-            },
-        ],
-        descriptionPrice: 'Стоимость',
-        price: '15 990 ₽',
-        buttonText: 'Стоимость',
-        buttonBuy: 'Купить',
-        description: 'Энергию и ресурс не надо искать - это есть в нашем теле.',
-        image: bookThree,
-    },
 ];
 
 export const BookBlock = () => {

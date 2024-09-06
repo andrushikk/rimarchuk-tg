@@ -94,7 +94,7 @@ export const InfoBuy: FC<InfoBuyProps> = (props) => {
     if (infoBuy?.id === '2' || infoBuy?.id === '3') {
         return (
             <div className={css.infoBuy}>
-                {(infoBuy as IBookBlock).content.map((item, index) => (
+                {(infoBuy as IBookBlock)?.content.map((item, index) => (
                     <div key={index} className={css.infoBuyChildren}>
                         <div className={css.contentTitle}>{item.contentTitle}</div>
                         <button className={css.button} onClick={() => toggleVisibility(index)}>
@@ -106,7 +106,7 @@ export const InfoBuy: FC<InfoBuyProps> = (props) => {
                         >
                             <div>{item.contentInfo}</div>
                             <ul>
-                                {item.contentList.map((contentItem, subIndex) => (
+                                {item.contentList?.map((contentItem, subIndex) => (
                                     <li key={subIndex}>{contentItem.title}</li>
                                 ))}
                             </ul>
@@ -160,7 +160,7 @@ export const InfoBuy: FC<InfoBuyProps> = (props) => {
             <div className={css.infoBuy}>
                 <div className={css.contentTitle}>{(infoBuy as IBookBlock)?.title}</div>
                 <div className={`${css.contentDescription} ${css.visible}`}>
-                    {(infoBuy as IBookBlock).content.map((item) => (
+                    {(infoBuy as IBookBlock)?.content.map((item) => (
                         <div className={css.infoBuyChildren} key={item.contentTitle}>
                             <div style={{ marginBottom: '12px' }} className={css.content}>
                                 {item.contentInfo}
@@ -218,7 +218,7 @@ export const InfoBuy: FC<InfoBuyProps> = (props) => {
                     {isShowManual && manual.data ? manual.data.description : null}
                 </div>
             )}
-            {isShowCourse && (infoBuy as ICourseCard).contentInfo && (
+            {isShowCourse && (infoBuy as ICourseCard)?.contentInfo && (
                 <div className={`${css.contentDescription1} ${css.visible}`}>
                     {(infoBuy as ICourseCard)?.contentInfo}
                 </div>
