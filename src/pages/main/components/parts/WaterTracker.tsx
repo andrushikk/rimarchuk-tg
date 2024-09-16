@@ -1,102 +1,134 @@
-import React, {BaseSyntheticEvent, useEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import {ThunkDispatch} from '@reduxjs/toolkit';
+import { ThunkDispatch } from '@reduxjs/toolkit';
 import cs from 'classnames';
 
 import CupIcon from '@/assets/images/actionGlass/cup.svg';
 import CupBlackIcon from '@/assets/images/actionGlass/cupBlack.svg';
 import MinusIcon from '@/assets/images/actionGlass/minus.svg';
 import PlusIcon from '@/assets/images/actionGlass/plus.svg';
-import {HeaderPage} from '@/modules/header/components/HeaderPage';
+import { HeaderPage } from '@/modules/header/components/HeaderPage';
 import WaterWaveImage from '@/pages/main/components/parts/WaterWaveImage';
-import {getUser} from '@/store/currentUserSlice';
-import {addVolumeWater} from '@/store/waterAddSlice';
-import {getWater} from '@/store/waterGetSlice';
-import {useBackButton} from '@/utils/hooks/useBackButton';
-import {AuthResponse, AuthUser, UserGet, UserGetResponse} from '@/utils/types';
-import {GetWaterResponse} from '@/utils/types/water';
+import { getUser } from '@/store/currentUserSlice';
+import { addVolumeWater, delVolumeWater } from '@/store/waterAddSlice';
+import { getWater } from '@/store/waterGetSlice';
+import { UserGet, UserGetResponse } from '@/utils/types';
+import { GetWaterResponse } from '@/utils/types/water';
 
 import css from './WaterTracker.module.scss';
-import {WaterVolume} from './WaterVolume';
-import InviteFriend from "@/pages/main/components/InviteFriend";
+import { WaterVolume } from './WaterVolume';
 
 const MAX_SIZE = 2560;
-const CONTAINER_HEIGHT_PX = 238;
-const CONTAINER_SIZE = 50;
+const CONTAINER_HEIGHT_PX = 300;
 
 export const WaterTracker = () => {
-    useBackButton('/');
     const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
 
     const waterVolume = useSelector((state: GetWaterResponse) => state.waterGet);
     const currentUser: UserGet = useSelector((state: UserGetResponse) => state.currentUser);
-    const authUser: AuthUser = useSelector((state: AuthResponse) => state.auth);
 
-    const [sliderValue, setSliderValue] = useState(waterVolume.data.data);
-    const [inviteFriend, setInviteFriend] = useState(false)
+    const [prevSliderValue, setPrevSliderValue] = useState(() => {
+        const savedValue = localStorage.getItem('prevSliderValue');
+        return savedValue ? parseInt(savedValue, 10) : 0;
+    });
+    const [inviteFriend, setInviteFriend] = useState(false);
+    const [adjustedHeight, setAdjustedHeight] = useState(0);
+    const [containerHeight, setContainerHeight] = useState(CONTAINER_HEIGHT_PX);
+    const [localSliderValue, setLocalSliderValue] = useState(prevSliderValue);
+    const [adjustedWaterHeight, setAdjustedWaterHeight] = useState(0);
 
     useEffect(() => {
-        setSliderValue(waterVolume.data.data)
-    }, [waterVolume]);
-
-    const handleSliderMouseUp = (e: BaseSyntheticEvent) => {
-        const sliderValue = +e.target.value;
-        setSliderValue(sliderValue);
-    };
-
-    const handleSliderChange = (e: BaseSyntheticEvent) => {
-        const sliderRange = +e.target.value;
-        setSliderValue(sliderRange);
-    };
-    const handleDecreaseSlider = () => {
-        if (sliderValue > CONTAINER_SIZE) {
-            setSliderValue(sliderValue - CONTAINER_SIZE)
-        }
-        else {
-            setSliderValue(0)
-        }
-    }
-    const handleIncreaseSlider = () => {
-        if (sliderValue < MAX_SIZE - CONTAINER_SIZE) {
-            setSliderValue(sliderValue + CONTAINER_SIZE)
-        }
-        else {
-            setSliderValue(MAX_SIZE)
-        }
-    }
-    const handlePostSliderValue = () => {
         const fetchGetWater = async () => {
-            if (!currentUser.data.wather_block) {
-                setInviteFriend(true)
-                return
-            } else {
-                setInviteFriend(false)
-            }
-            await dispatch(addVolumeWater(sliderValue))
             await dispatch(getWater());
             await dispatch(getUser());
+
+            // Update local storage with the latest value from the server
+            const updatedWaterVolume = waterVolume?.data?.data ?? 0;
+            setPrevSliderValue(updatedWaterVolume);
+            setLocalSliderValue(updatedWaterVolume);
+            localStorage.setItem('prevSliderValue', updatedWaterVolume.toString());
         };
 
-        if (authUser.user[0]) fetchGetWater()
-    }
+        fetchGetWater();
+    }, [dispatch, waterVolume?.data?.data]);
+
+    useEffect(() => {
+        const handleResize = () => {
+            const container = document.getElementById('rangeContainer');
+            if (container) {
+                setContainerHeight(container.clientHeight);
+            }
+        };
+
+        handleResize();
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
+    useEffect(() => {
+        setAdjustedHeight((localSliderValue / MAX_SIZE) * 210);
+        setAdjustedWaterHeight((localSliderValue / MAX_SIZE) * 350);
+    }, [localSliderValue, containerHeight]);
+
+    const handleIncrease = () => {
+        setLocalSliderValue(Math.min(localSliderValue + 320, MAX_SIZE));
+    };
+
+    const handleDecrease = () => {
+        setLocalSliderValue(Math.max(localSliderValue - 320, 0));
+    };
+
+    const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setLocalSliderValue(+e.target.value);
+    };
+
+    const handleAddGlassClick = async () => {
+        if (!currentUser.data.wather_block) {
+            setInviteFriend(true);
+            return;
+        } else {
+            setInviteFriend(false);
+        }
+        const diff = localSliderValue - prevSliderValue;
+
+        if (diff === 0) return;
+
+        const idUser = currentUser.data.user_id;
+
+        try {
+            if (diff > 0) {
+                await dispatch(addVolumeWater({ user_id: idUser, water_ml: diff }));
+            } else if (diff < 0) {
+                await dispatch(delVolumeWater({ user_id: idUser, water_ml: -diff }));
+            }
+
+            await dispatch(getWater());
+            await dispatch(getUser());
+
+            setPrevSliderValue(localSliderValue);
+            localStorage.setItem('prevSliderValue', localSliderValue.toString());
+        } catch (error) {
+            console.error('Failed to update water value:', error);
+        }
+    };
 
     return (
         <div className={css.waterTrackerWrapper}>
-            {
-                inviteFriend ? <InviteFriend closeModal={() => setInviteFriend(false)}/> : null
-            }
-            <WaterWaveImage />
             <div className={css.waterTracker}>
                 <HeaderPage title="Вода" className={css.waterHeader} />
-                <WaterVolume sliderValue={waterVolume.data.data} />
+                <WaterVolume sliderValue={localSliderValue} />
             </div>
             <div className={css.range}>
                 <div className={css.cupIcon}>
                     <CupIcon />
                 </div>
                 <div className={css.field}>
-                    <button onClick={handleDecreaseSlider} className={cs(css.controlsWater, css.minusIcon)}>
+                    <button type="button" onClick={handleDecrease} className={cs(css.controlsWater, css.minusIcon)}>
                         <MinusIcon />
                     </button>
                     <div className={css.rangeWithScale}>
@@ -110,30 +142,33 @@ export const WaterTracker = () => {
                                 type="range"
                                 id="range"
                                 min="0"
-                                max="2560"
-                                value={sliderValue}
+                                max={MAX_SIZE}
+                                value={localSliderValue}
                                 onChange={handleSliderChange}
-                                // onTouchStart={handleSliderMouseDown}
-                                onTouchEnd={handleSliderMouseUp}
-                                // onMouseDown={handleSliderMouseDown}
-                                onMouseUp={handleSliderMouseUp}
                                 className={css.rangeInput}
                             />
-                            <label htmlFor="range">{sliderValue}</label>
+                            <label
+                                htmlFor="range"
+                                className={css.waterLevelLabel}
+                                style={{ left: `${adjustedHeight}px` }}
+                            >
+                                {localSliderValue}
+                            </label>
                         </div>
                     </div>
-                    <button onClick={handleIncreaseSlider} className={cs(css.controlsWater, css.plusIcon)}>
+                    <button onClick={handleIncrease} type="button" className={cs(css.controlsWater, css.plusIcon)}>
                         <div className={css.ml}>мл</div>
                         <PlusIcon />
                     </button>
                 </div>
             </div>
-            <button onClick={handlePostSliderValue} className={css.addGlass}>
+            <button type="button" onClick={handleAddGlassClick} className={css.addGlass}>
                 <div className={css.addGlassIcon}>
                     <CupBlackIcon />
                 </div>
                 <p className={css.addGlassText}>Добавить стакан&nbsp;+</p>
             </button>
+            <WaterWaveImage waterLevel={adjustedWaterHeight} />
         </div>
     );
 };

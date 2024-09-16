@@ -1,18 +1,13 @@
-import { AuthUser } from '@/utils/types';
-
 import { ActionGlass } from './ActionGlass';
 import css from './WaterTracker.module.scss';
 import { WaterTrackerHeader } from './parts/WaterTrackerHeader';
 
-export type WaterTrackerProps = {
-    authUser?: AuthUser;
-};
+export type WaterTrackerProps = any;
 
-export const WaterTracker = (props: WaterTrackerProps) => {
-    const { authUser } = props;
+export const WaterTracker = () => {
     return (
         <div className={css.waterTracker}>
-            <WaterTrackerHeader authUser={authUser} />
+            <WaterTrackerHeader />
             <ActionGlass />
         </div>
     );

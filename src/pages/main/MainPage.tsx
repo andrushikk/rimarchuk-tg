@@ -86,7 +86,7 @@ const MainPage = () => {
         <div className={css.container}>
             <div>
                 <AffirmationDay />
-                <WaterTracker authUser={authUser} />
+                <WaterTracker />
                 <BookBlock />
                 <PodcastsBlock />
                 <VideoBlock />

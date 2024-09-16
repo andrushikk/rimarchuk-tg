@@ -1,28 +1,16 @@
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import GlassIcon from '@/assets/images/actionGlass/glass.svg';
 import { CircleProgressBar } from '@/modules/progressBar/CircleProgressBar';
+import { GetWaterResponse, WaterData } from '@/utils/types/water';
 
 import css from './ActionGlass.module.scss';
-import {useEffect, useState} from "react";
-import {getWaterPercent} from "@/utils/api/water";
-import {AuthResponse, AuthUser} from "@/utils/types";
-import {useSelector} from "react-redux";
 
 export const ActionGlass = () => {
-  const [percent, setPercent] = useState(0)
-  const authUser: AuthUser = useSelector((state: AuthResponse) => state.auth);
+    const waterVolume: WaterData = useSelector((state: GetWaterResponse) => state.waterGet);
+    const percent = Math.round((waterVolume.data.data / 2560) * 100);
 
-  useEffect(() => {
-    async function getPercent() {
-      const res = await getWaterPercent()
-      setPercent(res.percent)
-    }
-
-    if (authUser.user[0]) {
-      console.log(getPercent())
-    }
-  }, [authUser.user]);
     return (
         <div className={css.actionGlass}>
             <CircleProgressBar circleWidth={83} percent={percent} />

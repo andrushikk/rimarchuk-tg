@@ -26,8 +26,7 @@ export type AddWaterResponse = {
     error: LoadingStatus;
 };
 
-export type AddWater = number;
-
-export type Percent = {
-    percent: number;
-}
+export type AddWater = {
+    user_id: string | number;
+    water_ml: number;
+};
