@@ -1,27 +1,27 @@
-import React, {useEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import {ThunkDispatch} from '@reduxjs/toolkit';
+import { ThunkDispatch } from '@reduxjs/toolkit';
 
-import {Menu} from '@/modules/menu/Menu';
-import {PodcastsBlock} from '@/modules/podcastsBlock/PodcastsBlock';
-import {VideoBlock} from '@/modules/videoBlock/VideoBlock';
-import {getAffirmationAll} from '@/store/affirmationSlice';
-import {authToken} from '@/store/authSlice';
-import {getUser} from '@/store/currentUserSlice';
-import {addNewUser, getUsersAll} from '@/store/userSlice';
-import {getVideosAll} from '@/store/videosSlice';
-import {useTelegram} from '@/utils/hooks/useTelegram';
-import {AllUsers, AuthResponse, AuthUser, UserResponse} from '@/utils/types';
+import { Menu } from '@/modules/menu/Menu';
+import { PodcastsBlock } from '@/modules/podcastsBlock/PodcastsBlock';
+import { VideoBlock } from '@/modules/videoBlock/VideoBlock';
+import { getAffirmationAll } from '@/store/affirmationSlice';
+import { authToken } from '@/store/authSlice';
+import { getUser } from '@/store/currentUserSlice';
+import { addNewUser, getUsersAll } from '@/store/userSlice';
+import { getVideosAll } from '@/store/videosSlice';
+import { useTelegram } from '@/utils/hooks/useTelegram';
+import { AllUsers, AuthResponse, AuthUser, UserResponse } from '@/utils/types';
 
 import css from './Main.module.scss';
-import {AffirmationDay} from './components/AffirmationDay';
-import {BookBlock} from './components/BookBlock';
-import {WaterTracker} from './components/WaterTracker';
+import { AffirmationDay } from './components/AffirmationDay';
+import { BookBlock } from './components/BookBlock';
+import { WaterTracker } from './components/WaterTracker';
 
 const MainPage = () => {
     const { initDataUnsafe } = useTelegram();
-    const [isMobile, setIsMobile] = useState(window.innerWidth < 500);
+    const [, setIsMobile] = useState(window.innerWidth < 500);
     const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
     const userId: number = initDataUnsafe?.user?.id;
     const userName: string = initDataUnsafe?.user?.first_name;
@@ -51,7 +51,7 @@ const MainPage = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            if (!allUsers.data.length) return
+            if (!allUsers.data.length) return;
 
             if (userId && userName) {
                 const isIdExists = allUsers.data.some((user) => +user.user_id === +userId);
@@ -83,16 +83,16 @@ const MainPage = () => {
     }, [authUser.user, dispatch]);
 
     return (
-      <div className={css.container}>
-          <div>
-              <AffirmationDay/>
-              <WaterTracker authUser={authUser}/>
-              <BookBlock/>
-              <PodcastsBlock/>
-              <VideoBlock/>
-              <Menu/>
-          </div>
-      </div>
+        <div className={css.container}>
+            <div>
+                <AffirmationDay />
+                <WaterTracker authUser={authUser} />
+                <BookBlock />
+                <PodcastsBlock />
+                <VideoBlock />
+                <Menu />
+            </div>
+        </div>
     );
 };
 
