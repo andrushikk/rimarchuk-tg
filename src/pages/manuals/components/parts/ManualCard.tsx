@@ -1,5 +1,5 @@
-import React, { FC } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import cs from 'classnames';
 
@@ -24,12 +24,12 @@ export const ManualCard: FC<ManualCardProps> = (props) => {
     const navigate = useNavigate();
 
     const handleManual = () => {
-        // if (is_block) {
-        //     navigate(`/manual/${id}`);
-        //     return;
-        // }
+        if (is_block) {
+            navigate(`/manual/${id}`);
+            return;
+        }
         axios.post(`https://api-wather.plutus-fin.ru/api/bot/sendmanual?manualID=${id}`);
-        // close();
+        close();
     };
 
     return (

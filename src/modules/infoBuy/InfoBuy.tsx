@@ -191,10 +191,7 @@ export const InfoBuy: FC<InfoBuyProps> = (props) => {
                                 }}
                                 className={css.contentPriceButton}
                             >
-                                <button
-                                    className={css.contentPriceLink}
-                                    disabled={isShowBook && item.buttonBuy === 'Sold out'}
-                                >
+                                <button className={css.contentPriceLink} disabled={item.buttonBuy == 'Sold out'}>
                                     {(isShowCourse || isShowBook) && (
                                         <div className={css.contentPriceText}>{item.buttonBuy}</div>
                                     )}
