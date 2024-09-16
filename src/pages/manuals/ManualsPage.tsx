@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from 'react';
-import {shallowEqual, useDispatch, useSelector} from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 import { ThunkDispatch } from '@reduxjs/toolkit';
 
@@ -24,14 +24,16 @@ const ManualsPage: FC<ManualsPageProps> = () => {
     const allManuals: AllManuals = useSelector((state: AllManualsResponse) => state.manuals, shallowEqual);
 
     useEffect(() => {
-        dispatch(getManualsAll())
+        dispatch(getManualsAll());
     }, [dispatch]);
 
     return (
         <div className={css.manualsPage}>
             <HeaderPage title="Методички" />
             <div className={css.manualsWrapper}>
-                {allManuals.data?.map((item) => <ManualCard key={item.id} {...item} />) }
+                {allManuals.data?.map((item) => (
+                    <ManualCard key={item.id} {...item} />
+                ))}
             </div>
             <Menu />
         </div>

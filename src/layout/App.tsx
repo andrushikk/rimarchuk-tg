@@ -1,25 +1,26 @@
-import React, { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
-
-import { useTelegram } from '@/utils/hooks/useTelegram';
 
 import { ErrorCatch } from '../components/ErrorCatch';
 import { store } from '../store';
 import { router } from './AppRoutes';
-import PreviewVideo from "@/components/PreviewVideo/PreviewVideo";
 
 export const App = () => {
-    const { expand } = useTelegram();
+    // const { expand, enableClosingConfirmation } = useTelegram();
+    // const { postEvent } = useTelegramWebviewProxy();
 
-    useEffect(() => {
-        expand?.();
-    }, [expand]);
+    // useEffect(() => {
+    //     expand?.();
+    // }, [expand]);
 
+    // useEffect(() => {
+    //     const data = JSON.stringify({ allow_vertical_swipe: false });
+    //     postEvent('web_app_setup_swipe_behavior', data);
+    // }, [postEvent]);
+    // enableClosingConfirmation();
     return (
         <ErrorCatch>
             <Provider store={store}>
-                {/* <PreviewVideo /> */}
                 <RouterProvider router={router} />
             </Provider>
         </ErrorCatch>
