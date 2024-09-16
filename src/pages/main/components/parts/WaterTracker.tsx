@@ -9,12 +9,13 @@ import CupBlackIcon from '@/assets/images/actionGlass/cupBlack.svg';
 import MinusIcon from '@/assets/images/actionGlass/minus.svg';
 import PlusIcon from '@/assets/images/actionGlass/plus.svg';
 import { HeaderPage } from '@/modules/header/components/HeaderPage';
+import InviteFriend from '@/pages/main/components/InviteFriend';
 import WaterWaveImage from '@/pages/main/components/parts/WaterWaveImage';
 import { getUser } from '@/store/currentUserSlice';
 import { addVolumeWater, delVolumeWater } from '@/store/waterAddSlice';
 import { getWater } from '@/store/waterGetSlice';
 import { useBackButton } from '@/utils/hooks/useBackButton';
-import { UserGet, UserGetResponse } from '@/utils/types';
+import { AuthResponse, AuthUser, UserGet, UserGetResponse } from '@/utils/types';
 import { GetWaterResponse } from '@/utils/types/water';
 
 import css from './WaterTracker.module.scss';
@@ -29,6 +30,7 @@ export const WaterTracker = () => {
 
     const waterVolume = useSelector((state: GetWaterResponse) => state.waterGet);
     const currentUser: UserGet = useSelector((state: UserGetResponse) => state.currentUser);
+    const authUser: AuthUser = useSelector((state: AuthResponse) => state.auth);
 
     const [prevSliderValue, setPrevSliderValue] = useState(() => {
         const savedValue = localStorage.getItem('prevSliderValue');
@@ -90,12 +92,16 @@ export const WaterTracker = () => {
     };
 
     const handleAddGlassClick = async () => {
-        if (!currentUser.data.wather_block) {
-            setInviteFriend(true);
-            return;
-        } else {
-            setInviteFriend(false);
-        }
+        const fetchGetWater = async () => {
+            if (!currentUser.data.wather_block) {
+                setInviteFriend(true);
+                return;
+            } else {
+                setInviteFriend(false);
+            }
+        };
+
+        if (authUser.user[0]) fetchGetWater();
         const diff = localSliderValue - prevSliderValue;
 
         if (diff === 0) return;
@@ -121,6 +127,7 @@ export const WaterTracker = () => {
 
     return (
         <div className={css.waterTrackerWrapper}>
+            {inviteFriend ? <InviteFriend closeModal={() => setInviteFriend(false)} /> : null}
             <div className={css.waterTracker}>
                 <HeaderPage title="Вода" className={css.waterHeader} />
                 <WaterVolume sliderValue={localSliderValue} />
