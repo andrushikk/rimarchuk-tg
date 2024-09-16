@@ -134,21 +134,23 @@ export const InfoBuy: FC<InfoBuyProps> = (props) => {
                             <div className={css.content}>{item.descriptionPrice}</div>
                             <div className={css.contentPrice}>{item.price} ₽</div>
                         </div>
-                        <Link
-                            to={{
-                                pathname: `/delivery/${id}`,
-                                search: `price=${
-                                    isShowCourse ? item.price : isShowManual ? infoBuy.cost : ''
-                                }&delivery=${isShowCourse ? 'course' : isShowManual ? 'manual' : ''}`,
-                            }}
-                            className={css.contentPriceButton}
-                        >
-                            <button className={css.contentPriceLink} disabled={item.buttonBuy == 'Sold out'}>
-                                {(isShowCourse || isShowBook) && (
-                                    <div className={css.contentPriceText}>{item.buttonBuy}</div>
-                                )}
-                            </button>
-                        </Link>
+                        <button disabled={item.buttonBuy == 'Sold out'}>
+                            <Link
+                                to={{
+                                    pathname: `/delivery/${id}`,
+                                    search: `price=${
+                                        isShowCourse ? item.price : isShowManual ? infoBuy.cost : ''
+                                    }&delivery=${isShowCourse ? 'course' : isShowManual ? 'manual' : ''}`,
+                                }}
+                                className={css.contentPriceButton}
+                            >
+                                <button className={css.contentPriceLink}>
+                                    {(isShowCourse || isShowBook) && (
+                                        <div className={css.contentPriceText}>{item.buttonBuy}</div>
+                                    )}
+                                </button>
+                            </Link>
+                        </button>
                     </div>
                 ))}
             </div>
@@ -182,21 +184,23 @@ export const InfoBuy: FC<InfoBuyProps> = (props) => {
                                 <div className={css.content}>{item.descriptionPrice}</div>
                                 <div className={css.contentPrice}>{item.price} ₽</div>
                             </div>
-                            <Link
-                                to={{
-                                    pathname: `/delivery/${id}`,
-                                    search: `price=${
-                                        isShowCourse ? item.price : isShowManual ? infoBuy.cost : ''
-                                    }&delivery=${isShowCourse ? 'course' : isShowManual ? 'manual' : ''}`,
-                                }}
-                                className={css.contentPriceButton}
-                            >
-                                <button className={css.contentPriceLink} disabled={item.buttonBuy == 'Sold out'}>
-                                    {(isShowCourse || isShowBook) && (
-                                        <div className={css.contentPriceText}>{item.buttonBuy}</div>
-                                    )}
-                                </button>
-                            </Link>
+                            <button disabled={item.buttonBuy == 'Sold out'}>
+                                <Link
+                                    to={{
+                                        pathname: `/delivery/${id}`,
+                                        search: `price=${
+                                            isShowCourse ? item.price : isShowManual ? infoBuy.cost : ''
+                                        }&delivery=${isShowCourse ? 'course' : isShowManual ? 'manual' : ''}`,
+                                    }}
+                                    className={css.contentPriceButton}
+                                >
+                                    <button className={css.contentPriceLink}>
+                                        {(isShowCourse || isShowBook) && (
+                                            <div className={css.contentPriceText}>{item.buttonBuy}</div>
+                                        )}
+                                    </button>
+                                </Link>
+                            </button>
                         </div>
                     ))}
                 </div>

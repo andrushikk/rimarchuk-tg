@@ -1,6 +1,4 @@
-import React from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 
 import { AuthResponse, AuthUser } from '@/utils/types';
 
@@ -16,10 +14,11 @@ const InviteFriend = ({ closeModal }: any) => {
 https://t.me/imlegendbot?start=${authUser.user[0].user_id}`);
     const link = `https://t.me/share/url?url=${text}`;
 
-    const navigate = useNavigate();
+    console.log(link);
+
     return (
-        <button className={css.inviteFriend} onClick={closeModal}>
-            <button className={css.inviteContent} onClick={(e) => e.stopPropagation()}>
+        <div className={css.inviteFriend} onClick={closeModal}>
+            <div className={css.inviteContent} onClick={(e) => e.stopPropagation()}>
                 <p className={css.inviteTitle}>
                     Чтобы запустить трекер воды вам нужно хотя бы одному другу подарить внимание своему состоянию💙
                 </p>
@@ -27,18 +26,11 @@ https://t.me/imlegendbot?start=${authUser.user[0].user_id}`);
                 <a href={`${link}`} className={css.inviteBtn}>
                     <div className={css.inviteBtnText}>Пригласить друга</div>
                 </a>
-
-                <button
-                    onClick={() => {
-                        closeModal();
-                        navigate('/');
-                    }}
-                    className={css.inviteBtn}
-                >
+                <a href="#" onClick={closeModal} className={css.inviteCloseBtn}>
                     <div className={css.inviteBtnText}>Закрыть</div>
-                </button>
-            </button>
-        </button>
+                </a>
+            </div>
+        </div>
     );
 };
 
