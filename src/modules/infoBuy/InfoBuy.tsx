@@ -246,11 +246,14 @@ export const InfoBuy: FC<InfoBuyProps> = (props) => {
                     }}
                     className={css.contentPriceButton}
                 >
-                    <div className={css.contentPriceLink}>
+                    <button
+                        disabled={(infoBuy as ICourseCard)?.buttonBuy == 'Sold out'}
+                        className={css.contentPriceLink}
+                    >
                         {isShowCourse ? (
                             <div className={css.contentPriceText}>{(infoBuy as ICourseCard)?.buttonBuy}</div>
                         ) : null}
-                    </div>
+                    </button>
                 </Link>
             ) : null}
 

@@ -33,9 +33,9 @@ https://t.me/imlegendbot?start=${authUser.user[0].user_id}`);
                         closeModal();
                         navigate('/');
                     }}
-                    className={css.inviteBtnText}
+                    className={css.inviteBtn}
                 >
-                    <div className={css.inviteCloseBtn}>Закрыть</div>
+                    <div className={css.inviteBtnText}>Закрыть</div>
                 </button>
             </button>
         </button>
