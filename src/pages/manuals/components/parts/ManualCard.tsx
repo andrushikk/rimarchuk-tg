@@ -29,7 +29,7 @@ export const ManualCard: FC<ManualCardProps> = (props) => {
             return;
         }
         axios.post(`https://api-wather.plutus-fin.ru/api/bot/sendmanual?manualID=${id}`);
-        close();
+        // close();
     };
 
     return (
