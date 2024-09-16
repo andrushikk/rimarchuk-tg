@@ -143,7 +143,7 @@ export const data: IBookBlock[] = [
                 descriptionPrice: 'Стоимость печатной книги + консультации',
                 price: '5 990',
                 buttonText: 'Стоимость печатной книги + консультации',
-                buttonBuy: 'Купить',
+                buttonBuy: 'Sold out',
             },
         ],
         description: 'Энергию и ресурс не надо искать - это есть в нашем теле.',

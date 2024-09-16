@@ -23,6 +23,7 @@ const MAX_SIZE = 2560;
 const CONTAINER_HEIGHT_PX = 300;
 
 export const WaterTracker = () => {
+    useBackButton('/');
     const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
 
     const waterVolume = useSelector((state: GetWaterResponse) => state.waterGet);
