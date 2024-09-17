@@ -31,9 +31,6 @@ const MainPage = () => {
     const authUser: AuthUser = useSelector((state: AuthResponse) => state.auth);
     const allUsers: AllUsers = useSelector((state: UserResponse) => state.user);
 
-    console.log(authUser, 'authUser');
-    console.log(initDataUnsafe, 'initDataUnsafe');
-
     useEffect(() => {
         const handleResize = () => {
             setIsMobile(window.innerWidth < 500);

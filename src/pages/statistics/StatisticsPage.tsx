@@ -1,15 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import AvatarIcon from '@/assets/images/statistics/avatar.svg';
-import { Loader } from '@/components/Loader';
 import { useBackButton } from '@/utils/hooks/useBackButton';
 import { useTelegram } from '@/utils/hooks/useTelegram';
 import { AuthResponse, AuthUser } from '@/utils/types';
 
 import css from './StatisticsPage.module.scss';
 import { MyStatistics } from './components/MyStatistics';
-import axios from "@/axios";
 
 const StatisticsPage = () => {
     useBackButton('/');

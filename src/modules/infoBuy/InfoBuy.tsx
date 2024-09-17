@@ -184,7 +184,7 @@ export const InfoBuy: FC<InfoBuyProps> = (props) => {
                                 <div className={css.content}>{item.descriptionPrice}</div>
                                 <div className={css.contentPrice}>{item.price} ₽</div>
                             </div>
-                            <button disabled={item.buttonBuy == 'Sold out'}>
+                            <button>
                                 <Link
                                     to={{
                                         pathname: `/delivery/${id}`,
@@ -194,7 +194,7 @@ export const InfoBuy: FC<InfoBuyProps> = (props) => {
                                     }}
                                     className={css.contentPriceButton}
                                 >
-                                    <button className={css.contentPriceLink}>
+                                    <button disabled={item.buttonBuy == 'Sold out'} className={css.contentPriceLink}>
                                         {(isShowCourse || isShowBook) && (
                                             <div className={css.contentPriceText}>{item.buttonBuy}</div>
                                         )}
