@@ -10,7 +10,7 @@ export type User = {
     lvl_manuals?: number;
     lvl_wather_day?: number;
     water_week?: number;
-    wather_block?: number
+    wather_block?: number;
     affirmation_id?: number;
     api_token?: string;
     lvl_cur?: number;
@@ -57,8 +57,12 @@ export type UserGetResponse = {
 };
 
 export type Level = {
-    id: number,
-    level_name: string
-    quota_water: number,
-    quota_manuals: number
-}
+    id: number;
+    level_name: string;
+    quota_water: number;
+    quota_manuals: number;
+};
+
+export type AuthUserToken = {
+    api?: string;
+};

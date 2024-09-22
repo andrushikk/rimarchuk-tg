@@ -33,7 +33,7 @@ const authSlice = createSlice({
         });
         builder.addCase(authToken.fulfilled, (state, action) => {
             state.status = LoadingStatus.fulfilled;
-            state.user = action.payload.user;
+            localStorage.setItem('api_token', action.payload.api);
         });
         builder.addCase(authToken.rejected, (state, action) => {
             state.status = LoadingStatus.rejected;

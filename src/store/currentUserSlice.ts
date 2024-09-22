@@ -36,7 +36,7 @@ const currentUserSlice = createSlice({
         });
         builder.addCase(getUser.fulfilled, (state, action) => {
             state.status = LoadingStatus.fulfilled;
-            state.data = action.payload.data;
+            state.data = action.payload;
         });
         builder.addCase(getUser.rejected, (state, action) => {
             state.status = LoadingStatus.rejected;
