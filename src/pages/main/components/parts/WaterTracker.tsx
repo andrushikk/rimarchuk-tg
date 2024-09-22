@@ -49,12 +49,6 @@ export const WaterTracker = () => {
             await dispatch(getWater());
             await dispatch(getUser());
 
-            if (!currentUser?.data?.wather_block) {
-                setAllowToScrollSlider(false);
-            } else {
-                setAllowToScrollSlider(true);
-            }
-
             // Update local storage with the latest value from the server
             const updatedWaterVolume = waterVolume?.data?.water_ml ?? 0;
             setPrevSliderValue(updatedWaterVolume);
@@ -63,7 +57,12 @@ export const WaterTracker = () => {
         };
 
         fetchGetWater();
-        console.log(authUser);
+
+        if (!currentUser?.data?.wather_block) {
+            setAllowToScrollSlider(false);
+        } else {
+            setAllowToScrollSlider(true);
+        }
     }, [dispatch, waterVolume?.data?.water_ml, currentUser?.data?.wather_block, authUser]);
 
     useEffect(() => {
@@ -102,7 +101,7 @@ export const WaterTracker = () => {
 
     const handleAddGlassClick = async () => {
         const fetchGetWater = async () => {
-            if (!currentUser.data.wather_block) {
+            if (!currentUser.data?.wather_block) {
                 setInviteFriend(true);
                 return;
             } else {
@@ -110,12 +109,12 @@ export const WaterTracker = () => {
             }
         };
 
-        if (authUser.user[0]) fetchGetWater();
+        if (currentUser.data) fetchGetWater();
         const diff = localSliderValue - prevSliderValue;
 
         if (diff === 0) return;
 
-        const idUser = currentUser.data.user_id;
+        const idUser = currentUser.data?.user_id;
 
         try {
             if (diff > 0) {
@@ -136,7 +135,9 @@ export const WaterTracker = () => {
 
     return (
         <div className={css.waterTrackerWrapper}>
-            {inviteFriend ? <InviteFriend closeModal={() => setInviteFriend(false)} /> : null}
+            {inviteFriend ? (
+                <InviteFriend closeModal={() => setInviteFriend(false)} userId={currentUser.data?.user_id} />
+            ) : null}
             <div className={css.waterTracker}>
                 <HeaderPage title="Вода" className={css.waterHeader} />
                 <WaterVolume sliderValue={localSliderValue} />
@@ -146,7 +147,12 @@ export const WaterTracker = () => {
                     <CupIcon />
                 </div>
                 <div className={css.field}>
-                    <button type="button" onClick={handleDecrease} className={cs(css.controlsWater, css.minusIcon)}>
+                    <button
+                        type="button"
+                        onClick={handleDecrease}
+                        className={cs(css.controlsWater, css.minusIcon)}
+                        disabled={!allowToScrollSlider}
+                    >
                         <MinusIcon />
                     </button>
                     <div className={css.rangeWithScale}>
@@ -175,7 +181,12 @@ export const WaterTracker = () => {
                             </label>
                         </div>
                     </div>
-                    <button onClick={handleIncrease} type="button" className={cs(css.controlsWater, css.plusIcon)}>
+                    <button
+                        onClick={handleIncrease}
+                        type="button"
+                        className={cs(css.controlsWater, css.plusIcon)}
+                        disabled={!allowToScrollSlider}
+                    >
                         <div className={css.ml}>мл</div>
                         <PlusIcon />
                     </button>

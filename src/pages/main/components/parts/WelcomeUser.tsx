@@ -3,12 +3,9 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import ArrowIcon from '@/assets/images/arrowIcon/arrow.svg';
-import avatarIcon from '@/assets/images/welcomeUser/avatar.png';
 import QuestionsIcon from '@/assets/images/welcomeUser/questions.svg';
-import { Loader } from '@/components/Loader';
-import { getUser } from '@/store/currentUserSlice';
 import { useTelegram } from '@/utils/hooks/useTelegram';
-import { AuthResponse, AuthUser } from '@/utils/types';
+import { AuthResponse } from '@/utils/types';
 
 import css from './WelcomeUser.module.scss';
 
@@ -16,21 +13,21 @@ export const WelcomeUser = () => {
     const { initDataUnsafe } = useTelegram();
     const [userImg, setUserImg] = useState('');
 
-    const authUser: AuthUser = useSelector((state: AuthResponse) => state.auth);
+    const { user } = useSelector((state: AuthResponse) => state.auth || { user: [], status: null, error: null });
 
     const userName = initDataUnsafe?.user?.first_name;
 
     useEffect(() => {
         const fetchUser = async () => {
-            if (authUser.user[0]) {
-                setUserImg(authUser?.user?.[0].user_img);
+            if (user && user?.length > 0) {
+                setUserImg(user[0]?.user_img);
             }
         };
 
-        if (authUser.user.length > 0) {
+        if (Array.isArray(user) && user?.length > 0) {
             fetchUser();
         }
-    }, [authUser.user]);
+    }, [user]);
 
     return (
         <div className={css.welcomeUser}>

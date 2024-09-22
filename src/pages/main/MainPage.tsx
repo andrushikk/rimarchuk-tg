@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { ThunkDispatch } from '@reduxjs/toolkit';
@@ -28,8 +28,29 @@ const MainPage = () => {
     // const userId: number = 5231658595
     // const userName: string = 'Andrey'
 
-    const authUser: AuthUser = useSelector((state: AuthResponse) => state.auth);
+    const authUser: AuthUser = useSelector(
+        (state: AuthResponse) => state.auth || { user: [], status: null, error: null }
+    );
     const allUsers: AllUsers = useSelector((state: UserResponse) => state.user);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            if (!allUsers.data.length) return;
+
+            if (userId && userName) {
+                await dispatch(authToken(Number(userId)));
+                const isIdExists = allUsers.data.some((user) => +user.user_id === +userId);
+                if (!isIdExists) {
+                    await dispatch(addNewUser({ user_id: +userId, user_name: userName }));
+                } else {
+                    await dispatch(getAffirmationAll());
+                    await dispatch(getVideosAll());
+                }
+            }
+        };
+
+        fetchData();
+    }, [dispatch, allUsers.data, userId, userName]);
 
     useEffect(() => {
         const handleResize = () => {
@@ -47,37 +68,15 @@ const MainPage = () => {
         if (!allUsers.data.length) {
             dispatch(getUsersAll());
         }
-    }, []);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            if (!allUsers.data.length) return;
-
-            if (userId && userName) {
-                const isIdExists = allUsers.data.some((user) => +user.user_id === +userId);
-                if (!isIdExists) {
-                    await dispatch(addNewUser({ user_id: +userId, user_name: userName }));
-                    dispatch(authToken(Number(userId)));
-                } else {
-                    await dispatch(authToken(Number(userId)));
-                    await dispatch(getAffirmationAll());
-                    await dispatch(getVideosAll());
-                }
-            }
-        };
-
-        fetchData();
-    }, [dispatch, allUsers.data, userId, userName]);
+    }, [dispatch, allUsers.data]);
 
     useEffect(() => {
         const fetchUser = async () => {
-            if (authUser.user[0]) {
-                localStorage.setItem('api_token', authUser.user[0].api_token);
-                await dispatch(getUser());
-            }
+            localStorage.setItem('api_token', authUser.user[0].api_token);
+            await dispatch(getUser());
         };
 
-        if (authUser.user.length > 0) {
+        if (authUser.user?.length > 0) {
             fetchUser();
         }
     }, [authUser.user, dispatch]);
