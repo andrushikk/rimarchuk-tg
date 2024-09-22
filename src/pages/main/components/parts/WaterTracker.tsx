@@ -21,7 +21,6 @@ import { GetWaterResponse } from '@/utils/types/water';
 import css from './WaterTracker.module.scss';
 import { WaterVolume } from './WaterVolume';
 
-const MAX_SIZE = 2560;
 const CONTAINER_HEIGHT_PX = 300;
 
 export const WaterTracker = () => {
@@ -32,6 +31,8 @@ export const WaterTracker = () => {
     const currentUser: UserGet = useSelector((state: UserGetResponse) => state.currentUser);
     const authUser: AuthUser = useSelector((state: AuthResponse) => state.auth);
 
+    const MAX_SIZE = waterVolume.data.water_quota;
+
     const [prevSliderValue, setPrevSliderValue] = useState(() => {
         const savedValue = localStorage.getItem('prevSliderValue');
         return savedValue ? parseInt(savedValue, 10) : 0;
@@ -41,21 +42,29 @@ export const WaterTracker = () => {
     const [containerHeight, setContainerHeight] = useState(CONTAINER_HEIGHT_PX);
     const [localSliderValue, setLocalSliderValue] = useState(prevSliderValue);
     const [adjustedWaterHeight, setAdjustedWaterHeight] = useState(0);
+    const [allowToScrollSlider, setAllowToScrollSlider] = useState(false);
 
     useEffect(() => {
         const fetchGetWater = async () => {
             await dispatch(getWater());
             await dispatch(getUser());
 
+            if (!currentUser?.data?.wather_block) {
+                setAllowToScrollSlider(false);
+            } else {
+                setAllowToScrollSlider(true);
+            }
+
             // Update local storage with the latest value from the server
-            const updatedWaterVolume = waterVolume?.data?.data ?? 0;
+            const updatedWaterVolume = waterVolume?.data?.water_ml ?? 0;
             setPrevSliderValue(updatedWaterVolume);
             setLocalSliderValue(updatedWaterVolume);
             localStorage.setItem('prevSliderValue', updatedWaterVolume.toString());
         };
 
         fetchGetWater();
-    }, [dispatch, waterVolume?.data?.data]);
+        console.log(authUser);
+    }, [dispatch, waterVolume?.data?.water_ml, currentUser?.data?.wather_block, authUser]);
 
     useEffect(() => {
         const handleResize = () => {
@@ -77,7 +86,7 @@ export const WaterTracker = () => {
     useEffect(() => {
         setAdjustedHeight((localSliderValue / MAX_SIZE) * 210);
         setAdjustedWaterHeight((localSliderValue / MAX_SIZE) * 350);
-    }, [localSliderValue, containerHeight]);
+    }, [localSliderValue, MAX_SIZE]);
 
     const handleIncrease = () => {
         setLocalSliderValue(Math.min(localSliderValue + 320, MAX_SIZE));
@@ -155,6 +164,7 @@ export const WaterTracker = () => {
                                 value={localSliderValue}
                                 onChange={handleSliderChange}
                                 className={css.rangeInput}
+                                disabled={!allowToScrollSlider}
                             />
                             <label
                                 htmlFor="range"

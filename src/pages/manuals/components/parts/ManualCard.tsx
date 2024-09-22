@@ -23,6 +23,8 @@ export const ManualCard: FC<ManualCardProps> = (props) => {
     const { name, description, cost, id, is_block } = props;
     const navigate = useNavigate();
 
+    console.log(name, '222');
+
     const handleManual = () => {
         if (is_block) {
             navigate(`/manual/${id}`);

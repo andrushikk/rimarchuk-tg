@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import cs from 'classnames';
 
 import VideoPlay from '@/assets/images/videoCard/playVideo.svg';
+import videoPictureSrc from '@/assets/images/videoCard/videoTwo.jpg';
 import { Videos } from '@/utils/types/videos';
-import videoPictureSrc from '@/assets/images/videoCard/videoTwo.jpg'
 
 import css from './VideoCard.module.scss';
 

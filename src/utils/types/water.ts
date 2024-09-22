@@ -1,8 +1,8 @@
 import { LoadingStatus } from '@/constants';
-import { GetCheckPay } from '@/utils/types/pay';
 
 export type WaterGetData = {
-    data: number;
+    water_ml: number;
+    water_quota: number;
 };
 
 export type WaterData = {
@@ -29,4 +29,8 @@ export type AddWaterResponse = {
 export type AddWater = {
     user_id: string | number;
     water_ml: number;
+};
+
+export type Percent = {
+    percent: number;
 };

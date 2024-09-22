@@ -1,11 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { waterGet } from '@/utils/api/water';
-import { CheckPayError } from '@/utils/types/pay';
 import { GetWaterError, WaterData } from '@/utils/types/water';
 
 import { LoadingStatus } from '../constants';
-import { UserError } from '../utils/types';
 
 export const getWater = createAsyncThunk('waterGet/getWater', async (_, { rejectWithValue }) => {
     try {
@@ -17,7 +15,8 @@ export const getWater = createAsyncThunk('waterGet/getWater', async (_, { reject
 
 const initialState: WaterData = {
     data: {
-        data: 0,
+        water_ml: 0,
+        water_quota: 2560,
     },
     status: LoadingStatus.none,
     error: LoadingStatus.none,

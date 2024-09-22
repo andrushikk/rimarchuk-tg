@@ -5,6 +5,7 @@ import affirmationReducer from './affirmationSlice';
 import authReducer from './authSlice';
 import checkPayReducer from './checkPaySlice';
 import currentUserReducer from './currentUserSlice';
+import editQuotaVolumeReducer from './editQuotaVolumeSlice';
 import manualsGetReducer from './manualsGetSlice';
 import manualsReducer from './manualsSlice';
 import meditationsReducer from './meditationsSlice';
@@ -29,5 +30,6 @@ export const store = configureStore({
         manualsGet: manualsGetReducer,
         payContent: payContentReducer,
         checkPay: checkPayReducer,
+        editQuotaVolume: editQuotaVolumeReducer,
     },
 });

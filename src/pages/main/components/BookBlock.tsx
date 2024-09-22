@@ -149,18 +149,6 @@ export const data: IBookBlock[] = [
         description: 'Энергию и ресурс не надо искать - это есть в нашем теле.',
         image: bookFourSrc,
     },
-    {
-        id: '1',
-        link: true,
-        book: false,
-        title: (
-            <div>
-                <span className={css.bookTitleCard}>I’M LEGEND</span>
-            </div>
-        ),
-        description: 'Твоё перерождение',
-        image: bookOneSrc,
-    },
 ];
 
 export const BookBlock = () => {

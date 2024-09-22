@@ -4,8 +4,54 @@
 }
 
 .mediaPodcast {
-  &[data-index="1"], &[data-index="2"], &[data-index="3"], &[data-index="4"],&[data-index="5"], &[data-index="6"], &[data-index="7"], &[data-index="8"], &[data-index="9"], &[data-index="10"]  {
+  &[data-index="1"] {
+    background:  radial-gradient(circle at top left, #242C7F, #242C7F 15%, transparent 45%),
+    url("../../../../assets/images/podcastsCard/childrenandstress.png") center center / cover no-repeat
+  }
+
+  &[data-index="2"] {
+    background:  radial-gradient(circle at top left, #242C7F, #242C7F 15%, transparent 45%),
+    url("../../../../assets/images/podcastsCard/childandvit.png") center center / cover no-repeat
+  }
+
+  &[data-index="3"] {
+    background:  radial-gradient(circle at top left, #242C7F, #242C7F 15%, transparent 45%),
+    url("../../../../assets/images/podcastsCard/childbol.png") center center / cover no-repeat
+  }
+
+  &[data-index="4"] {
+    background:  radial-gradient(circle at top left, #242C7F, #242C7F 15%, transparent 45%),
+    url("../../../../assets/images/podcastsCard/natur.png") center center / cover no-repeat
+  }
+
+  &[data-index="5"] {
+    background:  radial-gradient(circle at top left, #242C7F, #242C7F 15%, transparent 45%),
+    url("../../../../assets/images/podcastsCard/childandanti.png") center center / cover no-repeat
+  }
+
+  &[data-index="6"] {
+    background:  radial-gradient(circle at top left, #242C7F, #242C7F 15%, transparent 45%),
+    url("../../../../assets/images/podcastsCard/childandwater.png") center center / cover no-repeat
+  }
+
+  &[data-index="7"] {
     background:  radial-gradient(circle at top left, #242C7F, #242C7F 15%, transparent 45%),
     url("../../../../assets/images/podcastsCard/podcastBack.png") center center / cover no-repeat
+  }
+
+  &[data-index="8"] {
+    background:  radial-gradient(circle at top left, #242C7F, #242C7F 15%, transparent 45%),
+    url("../../../../assets/images/podcastsCard/podcastTwo.png") center center / cover no-repeat
+  }
+
+  &[data-index="9"] {
+    background:  radial-gradient(circle at top left, #242C7F, #242C7F 15%, transparent 45%),
+    url("../../../../assets/images/podcastsCard/podcastBack.png") center center / cover no-repeat
+  }
+
+  
+  &[data-index="10"] {
+    background:  radial-gradient(circle at top left, #242C7F, #242C7F 15%, transparent 45%),
+    url("../../../../assets/images/podcastsCard/podcastTwo.png") center center / cover no-repeat
   }
 }

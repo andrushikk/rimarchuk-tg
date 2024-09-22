@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ThunkDispatch } from '@reduxjs/toolkit';
 
 import { getRandomAffirmation } from '@/store/affirmationEditSlice';
-import { getAffirmationAll } from '@/store/affirmationSlice';
 import { getEntryAffirmation } from '@/utils/helpers/affirmation/getEntryAffirmation';
 import { UserGet, UserGetResponse } from '@/utils/types';
 import { AffirmationResponse, AllAffirmations } from '@/utils/types/affirmation';
@@ -31,7 +30,7 @@ export const AffirmationInfo = () => {
 
     useEffect(() => {
         setAffirmation(getEntryAffirmation(allAffirmation, currentUser.data?.affirmation_id));
-    }, [allAffirmation.data, currentUser.data]);
+    }, [allAffirmation, currentUser.data?.affirmation_id]);
 
     useInterval(() => {
         dispatch(getRandomAffirmation());
@@ -39,7 +38,7 @@ export const AffirmationInfo = () => {
 
     return (
         <div className={css.affirmation}>
-            <div className={css.affirmationTitle}>Аффирмация дня</div>
+            <div className={css.affirmationTitle}>Польза дня</div>
             <div className={css.affirmationDescription}>{affirmation}</div>
         </div>
     );
