@@ -21,8 +21,15 @@ export const payContentRequest = async ({
 
         console.log(response.data, 'rrrrrrrr');
         if (response.data.pay_url) {
+            localStorage.setItem(
+                'status_pay',
+                JSON.stringify({
+                    pay_status: 'pay',
+                    course_id: course_id,
+                    manuals_id: manuals_id,
+                })
+            );
             window.location.href = response.data.pay_url;
-
             return response.data;
         } else {
             console.error('Отсутствует URL для редиректа');
