@@ -46,23 +46,39 @@ export const WaterTracker = () => {
         const fetchInitialData = async () => {
             await dispatch(getWater());
             await dispatch(getUser());
+
+            // Update local storage with the latest value from the server
+            const updatedWaterVolume = waterVolume?.data?.water_ml ?? 0;
+            setPrevSliderValue(updatedWaterVolume);
+            setLocalSliderValue(updatedWaterVolume);
+            localStorage.setItem('prevSliderValue', updatedWaterVolume.toString());
         };
 
-        if (!currentUser.data?.wather_block) {
+        fetchGetWater();
+
+        if (!currentUser?.data?.wather_block) {
             setAllowToScrollSlider(false);
         } else {
             setAllowToScrollSlider(true);
         }
-
-        fetchInitialData();
-    }, [dispatch]);
+    }, [dispatch, waterVolume?.data?.water_ml, currentUser?.data?.wather_block, authUser]);
 
     useEffect(() => {
-        const updatedWaterVolume = waterVolume?.data?.water_ml ?? 0;
-        setPrevSliderValue(updatedWaterVolume);
-        setLocalSliderValue(updatedWaterVolume);
-        localStorage.setItem('prevSliderValue', updatedWaterVolume.toString());
-    }, [waterVolume]);
+        const handleResize = () => {
+            const container = document.getElementById('rangeContainer');
+            if (container) {
+                setContainerHeight(container.clientHeight);
+            }
+        };
+
+        handleResize();
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
     useEffect(() => {
         setAdjustedHeight((localSliderValue / MAX_SIZE) * 210);
@@ -83,7 +99,7 @@ export const WaterTracker = () => {
 
     const handleAddGlassClick = async () => {
         const fetchGetWater = async () => {
-            if (!currentUser.data.wather_block) {
+            if (!currentUser.data?.wather_block) {
                 setInviteFriend(true);
                 return;
             } else {
@@ -92,7 +108,6 @@ export const WaterTracker = () => {
         };
 
         if (currentUser.data) fetchGetWater();
-
         const diff = localSliderValue - prevSliderValue;
 
         if (diff === 0) return;
@@ -121,7 +136,9 @@ export const WaterTracker = () => {
 
     return (
         <div className={css.waterTrackerWrapper}>
-            {inviteFriend ? <InviteFriend closeModal={() => setInviteFriend(false)} /> : null}
+            {inviteFriend ? (
+                <InviteFriend closeModal={() => setInviteFriend(false)} userId={currentUser.data?.user_id} />
+            ) : null}
             <div className={css.waterTracker}>
                 <HeaderPage title="Вода" className={css.waterHeader} />
                 <WaterVolume sliderValue={localSliderValue} />
@@ -131,7 +148,12 @@ export const WaterTracker = () => {
                     <CupIcon />
                 </div>
                 <div className={css.field}>
-                    <button type="button" onClick={handleDecrease} className={cs(css.controlsWater, css.minusIcon)} disabled={!allowToScrollSlider}>
+                    <button
+                        type="button"
+                        onClick={handleDecrease}
+                        className={cs(css.controlsWater, css.minusIcon)}
+                        disabled={!allowToScrollSlider}
+                    >
                         <MinusIcon />
                     </button>
                     <div className={css.rangeWithScale}>
@@ -160,7 +182,12 @@ export const WaterTracker = () => {
                             </label>
                         </div>
                     </div>
-                    <button onClick={handleIncrease} type="button" className={cs(css.controlsWater, css.plusIcon)} disabled={!allowToScrollSlider}>
+                    <button
+                        onClick={handleIncrease}
+                        type="button"
+                        className={cs(css.controlsWater, css.plusIcon)}
+                        disabled={!allowToScrollSlider}
+                     disabled={!allowToScrollSlider}>
                         <div className={css.ml}>мл</div>
                         <PlusIcon />
                     </button>
