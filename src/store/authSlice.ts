@@ -1,8 +1,8 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
-import { LoadingStatus } from '@/constants';
-import { auth } from '@/utils/api/user';
-import { AuthUser, UserError } from '@/utils/types';
+import { LoadingStatus } from '@/constants'
+import { auth } from '@/utils/api/user'
+import { AuthUser, UserError } from '@/utils/types'
 
 export const authToken = createAsyncThunk('auth/authToken', async (user_id: number, { rejectWithValue }) => {
     try {
@@ -33,7 +33,10 @@ const authSlice = createSlice({
         });
         builder.addCase(authToken.fulfilled, (state, action) => {
             state.status = LoadingStatus.fulfilled;
-            localStorage.setItem('api_token', action.payload.api);
+            const api_token = localStorage.getItem('api_token');
+            if (!api_token) {
+                localStorage.setItem('api_token', action.payload.api);
+            }
         });
         builder.addCase(authToken.rejected, (state, action) => {
             state.status = LoadingStatus.rejected;

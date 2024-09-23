@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import ArrowIcon from '@/assets/images/arrowIcon/arrow.svg';
 import QuestionsIcon from '@/assets/images/welcomeUser/questions.svg';
 import { useTelegram } from '@/utils/hooks/useTelegram';
-import { AuthResponse } from '@/utils/types';
+import { UserGet, UserGetResponse } from '@/utils/types';
 
 import css from './WelcomeUser.module.scss';
 
@@ -13,21 +13,19 @@ export const WelcomeUser = () => {
     const { initDataUnsafe } = useTelegram();
     const [userImg, setUserImg] = useState('');
 
-    const { user } = useSelector((state: AuthResponse) => state.auth || { user: [], status: null, error: null });
+    const currentUser: UserGet = useSelector((state: UserGetResponse) => state.currentUser);
 
     const userName = initDataUnsafe?.user?.first_name;
 
     useEffect(() => {
         const fetchUser = async () => {
-            if (user && user?.length > 0) {
-                setUserImg(user[0]?.user_img);
+            if (currentUser.data && currentUser.data.user_name) {
+                setUserImg(currentUser.data?.user_img);
             }
         };
 
-        if (Array.isArray(user) && user?.length > 0) {
-            fetchUser();
-        }
-    }, [user]);
+        if (currentUser.data) fetchUser();
+    }, [currentUser.data]);
 
     return (
         <div className={css.welcomeUser}>
