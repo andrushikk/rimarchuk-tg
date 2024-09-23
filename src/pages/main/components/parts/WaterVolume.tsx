@@ -32,7 +32,7 @@ export const WaterVolume = (props: WaterVolumeProps) => {
         };
 
         fetchGetWater();
-    }, [sliderValue, dispatch]);
+    }, [dispatch]);
 
     // Функция для отправки изменений на сервер
     const handleChangeQuotaVolume = async () => {

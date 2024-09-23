@@ -1,24 +1,27 @@
-import { Suspense } from 'react';
+import { Suspense, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { Outlet } from 'react-router-dom';
 
+import { ThunkDispatch } from '@reduxjs/toolkit';
+
 import { Loader } from '@/components/Loader';
+import { authToken } from '@/store/authSlice';
+import { useTelegram } from '@/utils/hooks/useTelegram';
 
 import css from './AppLayout.module.scss';
 
 export const AppLayout = () => {
-    // const [videoPlayed, setVideoPlayed] = useState(false);
+    const { initDataUnsafe } = useTelegram();
+    const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
+    const userId: number = initDataUnsafe?.user?.id;
 
-    // const handleVideoEnded = () => {
-    //     setVideoPlayed(true);
-    // };
+    useEffect(() => {
+        const fetchToken = async () => {
+            await dispatch(authToken(Number(userId)));
+        };
 
-    /*  const dispatch = useDispatch();
-    const userStatus = useSelector((store) => store.user.user.status);
-    const userData = useSelector((store) => store.user.user.data, shallowEqual);
-
-    const isAuth = userStatus === LoadingStatus.fulfilled && userData?.id;
-
-   */
+        if (userId) fetchToken();
+    }, [userId, dispatch]);
 
     return (
         <div className={css.layout}>

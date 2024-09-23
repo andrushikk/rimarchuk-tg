@@ -9,7 +9,7 @@ import css from './ActionGlass.module.scss';
 
 export const ActionGlass = () => {
     const waterVolume: WaterData = useSelector((state: GetWaterResponse) => state.waterGet);
-    const percent = Math.round((waterVolume.data.water_ml / 2560) * 100);
+    const percent = Math.round((waterVolume.data.water_ml / waterVolume.data.water_quota) * 100);
 
     return (
         <div className={css.actionGlass}>

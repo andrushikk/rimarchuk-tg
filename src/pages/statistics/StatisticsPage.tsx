@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 
 import { useBackButton } from '@/utils/hooks/useBackButton';
 import { useTelegram } from '@/utils/hooks/useTelegram';
-import { AuthResponse, AuthUser } from '@/utils/types';
+import { UserGet, UserGetResponse } from '@/utils/types';
 
 import css from './StatisticsPage.module.scss';
 import { MyStatistics } from './components/MyStatistics';
@@ -13,19 +13,17 @@ const StatisticsPage = () => {
     const { initDataUnsafe } = useTelegram();
     const [userImg, setUserImg] = useState('');
 
-    const authUser: AuthUser = useSelector((state: AuthResponse) => state.auth);
+    const currentUser: UserGet = useSelector((state: UserGetResponse) => state.currentUser);
 
     useEffect(() => {
         const fetchUser = async () => {
-            if (authUser.user[0]) {
-                setUserImg(authUser?.user?.[0].user_img);
+            if (currentUser.data && currentUser.data.user_name) {
+                setUserImg(currentUser.data?.user_img);
             }
         };
 
-        if (authUser.user.length > 0) {
-            fetchUser();
-        }
-    }, [authUser.user]);
+        if (currentUser.data) fetchUser();
+    }, [currentUser.data]);
 
     return (
         <div className={css.statisticsWrapper}>

@@ -8,7 +8,7 @@ export const waterGet = async (): Promise<WaterGetData> => {
 };
 
 export const addWaterRequest = async (water_ml: AddWater): Promise<UserMessage> => {
-    const response = await axios.post(`/api/water/setwater?water_ml=${water_ml}`);
+    const response = await axios.post(`/api/water/setwater?water_ml=${water_ml.water_ml}`);
     return response.data;
 };
 
