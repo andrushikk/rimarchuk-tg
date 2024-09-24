@@ -1,16 +1,16 @@
-import { FC } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { FC } from 'react'
+import { useNavigate } from 'react-router-dom'
 
-import cs from 'classnames';
+import cs from 'classnames'
 
-import ManualBook from '@/assets/images/manuals/book.svg';
-import BuyBook from '@/assets/images/manuals/buy.svg';
-import DownloadBook from '@/assets/images/manuals/download.svg';
-import axios from '@/axios';
-import { useTelegram } from '@/utils/hooks/useTelegram';
-import { Manuals } from '@/utils/types/manuals';
+import ManualBook from '@/assets/images/manuals/book.svg'
+import BuyBook from '@/assets/images/manuals/buy.svg'
+import DownloadBook from '@/assets/images/manuals/download.svg'
+import axios from '@/axios'
+import { useTelegram } from '@/utils/hooks/useTelegram'
+import { Manuals } from '@/utils/types/manuals'
 
-import css from './ManualCard.module.scss';
+import css from './ManualCard.module.scss'
 
 export type ManualCardProps = Manuals & {
     index?: number;
@@ -31,6 +31,7 @@ export const ManualCard: FC<ManualCardProps> = (props) => {
             return;
         }
         axios.post(`https://api-wather.plutus-fin.ru/api/bot/sendmanual?manualID=${id}`);
+        close();
     };
 
     return (

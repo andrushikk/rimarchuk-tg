@@ -1,19 +1,19 @@
-import { Suspense, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { Outlet } from 'react-router-dom';
+import { Suspense, useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { Outlet } from 'react-router-dom'
 
-import { ThunkDispatch } from '@reduxjs/toolkit';
+import { ThunkDispatch } from '@reduxjs/toolkit'
 
-import axios from '@/axios';
-import { Loader } from '@/components/Loader';
-import { authToken } from '@/store/authSlice';
-import { getCheckPay } from '@/store/checkPaySlice';
-import { useTelegram } from '@/utils/hooks/useTelegram';
+import axios from '@/axios'
+import { Loader } from '@/components/Loader'
+import { authToken } from '@/store/authSlice'
+import { getCheckPay } from '@/store/checkPaySlice'
+import { useTelegram } from '@/utils/hooks/useTelegram'
 
-import css from './AppLayout.module.scss';
+import css from './AppLayout.module.scss'
 
 export const AppLayout = () => {
-    const { initDataUnsafe } = useTelegram();
+    const { initDataUnsafe, close } = useTelegram();
     const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
     const userId: number = initDataUnsafe?.user?.id;
     const [courses, setCourses] = useState([]);
@@ -44,14 +44,16 @@ export const AppLayout = () => {
                     `https://api-wather.plutus-fin.ru/api/bot/sendmanual?manualID=${JSON.parse(payObject).course_id}`
                 );
                 localStorage.removeItem('status_pay');
+                close();
             } else if (JSON.parse(payObject).manuals_id in manuals) {
                 axios.post(
                     `https://api-wather.plutus-fin.ru/api/bot/sendmanual?manualID=${JSON.parse(payObject).manuals_id}`
                 );
                 localStorage.removeItem('status_pay');
+                close();
             }
         }
-    }, [courses, manuals, dispatch]);
+    }, [dispatch]);
 
     return (
         <div className={css.layout}>
