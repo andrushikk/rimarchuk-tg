@@ -1,5 +1,5 @@
-import axios from '@/axios';
-import { GetCheckPay, Pay, PayMessage } from '@/utils/types/pay';
+import axios from '@/axios'
+import { GetCheckPay, Pay, PayMessage } from '@/utils/types/pay'
 
 export const getCheckPayRequest = async (): Promise<GetCheckPay> => {
     const response = await axios.get(`/api/prodamus/check_pay`);
@@ -16,7 +16,7 @@ export const payContentRequest = async ({
 }: Pay): Promise<PayMessage> => {
     try {
         const response = await axios.post(
-            `/api/prodamus/pay?customer_phone=${customer_phone}&customer_email=${customer_email}&cost=${+cost}&course_id=${+course_id}&manuals_id=${+manuals_id}`
+            `/api/prodamus/pay?customer_phone=${customer_phone}&customer_email=${customer_email}&cost=${+cost}&${course_id !== null ? 'course_id=' + course_id : ''}&${manuals_id !== null ? 'manuals_id=' + manuals_id : ''}`,
         );
 
         console.log(response.data, 'rrrrrrrr');

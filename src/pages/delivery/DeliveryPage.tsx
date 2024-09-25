@@ -1,16 +1,16 @@
-import { SyntheticEvent } from 'react';
-import { useDispatch } from 'react-redux';
-import { useLocation, useParams } from 'react-router-dom';
+import { SyntheticEvent } from 'react'
+import { useDispatch } from 'react-redux'
+import { useLocation, useParams } from 'react-router-dom'
 
-import { ThunkDispatch } from '@reduxjs/toolkit';
-import Cookies from 'js-cookie';
+import { ThunkDispatch } from '@reduxjs/toolkit'
+import Cookies from 'js-cookie'
 
-import { CustomInput } from '@/modules/inputs/CustomInput';
-import { payContent } from '@/store/payContentSlice';
-import { useBackButton } from '@/utils/hooks/useBackButton';
+import { CustomInput } from '@/modules/inputs/CustomInput'
+import { payContent } from '@/store/payContentSlice'
+import { useBackButton } from '@/utils/hooks/useBackButton'
 
-import css from './DeliveryPage.module.scss';
-import { IAddress, useDeliveryPage } from './useDeliveryPage';
+import css from './DeliveryPage.module.scss'
+import { IAddress, useDeliveryPage } from './useDeliveryPage'
 
 const DeliveryPage = () => {
     useBackButton('/');

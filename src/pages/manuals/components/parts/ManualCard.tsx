@@ -9,6 +9,7 @@ import DownloadBook from '@/assets/images/manuals/download.svg'
 import axios from '@/axios'
 import { useTelegram } from '@/utils/hooks/useTelegram'
 import { Manuals } from '@/utils/types/manuals'
+import { useSelector } from 'react-redux'
 
 import css from './ManualCard.module.scss'
 
@@ -22,11 +23,12 @@ export const ManualCard: FC<ManualCardProps> = (props) => {
     const { close } = useTelegram();
     const { name, description, cost, id, is_block } = props;
     const navigate = useNavigate();
+    const { data } = useSelector((state: any) => state.checkPay);
 
     console.log(name, '222');
 
     const handleManual = () => {
-        if (is_block) {
+        if (is_block && !data?.course_id?.includes(id) || !data?.manuals_id?.includes(id)) {
             navigate(`/manual/${id}`);
             return;
         }

@@ -1,16 +1,17 @@
-import React, { FC, useEffect } from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { FC, useEffect } from 'react'
+import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 
-import { ThunkDispatch } from '@reduxjs/toolkit';
+import { ThunkDispatch } from '@reduxjs/toolkit'
 
-import { HeaderPage } from '@/modules/header/components/HeaderPage';
-import { Menu } from '@/modules/menu/Menu';
-import { getManualsAll } from '@/store/manualsSlice';
-import { useBackButton } from '@/utils/hooks/useBackButton';
-import { AllManuals, AllManualsResponse } from '@/utils/types/manuals';
+import { HeaderPage } from '@/modules/header/components/HeaderPage'
+import { Menu } from '@/modules/menu/Menu'
+import { getManualsAll } from '@/store/manualsSlice'
+import { useBackButton } from '@/utils/hooks/useBackButton'
+import { AllManuals, AllManualsResponse } from '@/utils/types/manuals'
 
-import css from './ManualsPage.module.scss';
-import { ManualCard } from './components/parts/ManualCard';
+import { getCheckPay } from '@/store/checkPaySlice'
+import css from './ManualsPage.module.scss'
+import { ManualCard } from './components/parts/ManualCard'
 
 export type ManualsPageProps = {
     isPage?: boolean;
@@ -25,6 +26,7 @@ const ManualsPage: FC<ManualsPageProps> = () => {
 
     useEffect(() => {
         dispatch(getManualsAll());
+        dispatch(getCheckPay());
     }, [dispatch]);
 
     return (
