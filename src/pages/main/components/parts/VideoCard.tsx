@@ -21,7 +21,7 @@ export const VideoCard: FC<VideoCardProps> = (props) => {
     return (
         <div className={cs(css.videoCardWrapper, className)}>
             <div className={cs(css.videoCard, isPage ? css.videoPageCard : '')}>
-                <img src={videoPictureSrc} />
+                <img src={pic_url} />
             </div>
             <div className={css.cardTitle}>{name}</div>
 
