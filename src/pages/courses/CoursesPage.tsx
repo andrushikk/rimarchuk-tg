@@ -1,16 +1,13 @@
-import React, { FC } from 'react';
+import { FC } from 'react'
 
-import avatarLesson from '@/assets/images/course/avatar.png';
-import brainImage from '@/assets/images/courses/brain.png';
-import meditationImage from '@/assets/images/courses/meditation.png';
-import moneyImage from '@/assets/images/courses/money.png';
-import { HeaderPage } from '@/modules/header/components/HeaderPage';
-import { Menu } from '@/modules/menu/Menu';
-import { useBackButton } from '@/utils/hooks/useBackButton';
-import { ICourses } from '@/utils/types/courses';
+import meditationImage from '@/assets/images/courses/meditation.png'
+import { HeaderPage } from '@/modules/header/components/HeaderPage'
+import { Menu } from '@/modules/menu/Menu'
+import { useBackButton } from '@/utils/hooks/useBackButton'
+import { ICourses } from '@/utils/types/courses'
 
-import css from './CoursesPage.module.scss';
-import { CoursesCard } from './component/parts/CoursesCard';
+import css from './CoursesPage.module.scss'
+import { CoursesCard } from './component/parts/CoursesCard'
 
 export type CoursesPageProps = {
     isPage?: boolean;
@@ -32,7 +29,7 @@ export const dataCourses: ICourses[] = [
                 lesson: [
                     {
                         id: '11',
-                        image: '',
+                        image: 'https://content-water.plutus-fin.ru/images/photo_2024-09-24_08-50-32.jpg',
                         title: 'О важности воды, которую недооценивают',
                         description: 'Урок 1',
                         open: true,
@@ -40,7 +37,7 @@ export const dataCourses: ICourses[] = [
                     },
                     {
                         id: '12',
-                        image: '',
+                        image: 'https://content-water.plutus-fin.ru/images/photo_2024-09-24_08-50-39.jpg',
                         title: 'Про очищение организма, кому это надо',
                         description: 'Урок 2',
                         open: true,
@@ -48,7 +45,7 @@ export const dataCourses: ICourses[] = [
                     },
                     {
                         id: '13',
-                        image: '',
+                        image: 'https://content-water.plutus-fin.ru/images/photo_2024-09-24_08-50-50.jpg',
                         title: 'Про углеводы. То, что вы должны знать прямо сейчас',
                         description: 'Урок 3',
                         open: true,
@@ -56,7 +53,7 @@ export const dataCourses: ICourses[] = [
                     },
                     {
                         id: '14',
-                        image: '',
+                        image: 'https://content-water.plutus-fin.ru/images/photo_2024-09-24_08-50-45.jpg',
                         title: 'Жиры и молодость. Прямая связь',
                         description: 'Урок 4',
                         open: true,
