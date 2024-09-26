@@ -1,23 +1,23 @@
-import { Suspense, useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { Outlet } from 'react-router-dom'
+import { Suspense, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Outlet } from 'react-router-dom';
 
-import { ThunkDispatch } from '@reduxjs/toolkit'
+import { ThunkDispatch } from '@reduxjs/toolkit';
 
-import axios from '@/axios'
-import { Loader } from '@/components/Loader'
-import { authToken } from '@/store/authSlice'
-import { getCheckPay } from '@/store/checkPaySlice'
-import { useTelegram } from '@/utils/hooks/useTelegram'
+import axios from '@/axios';
+import { Loader } from '@/components/Loader';
+import { authToken } from '@/store/authSlice';
+import { getCheckPay } from '@/store/checkPaySlice';
+import { useTelegram } from '@/utils/hooks/useTelegram';
 
-import css from './AppLayout.module.scss'
+import css from './AppLayout.module.scss';
 
 export const AppLayout = () => {
     const { initDataUnsafe, close } = useTelegram();
     const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
     const userId: number = initDataUnsafe?.user?.id;
-    const [courses, setCourses] = useState([]);
-    const [manuals, setManuals] = useState([]);
+    const payObject = localStorage.getItem('status_pay');
+    const { data } = useSelector((state: any) => state.checkPay);
 
     useEffect(() => {
         const fetchToken = async () => {
@@ -31,28 +31,33 @@ export const AppLayout = () => {
         const fetchPayContent = async () => {
             const response = await dispatch(getCheckPay());
             if (getCheckPay.fulfilled.match(response)) {
-                setCourses(response.payload.course_id);
-                setManuals(response.payload.manuals_id);
+                if (JSON.parse(payObject)?.pay_status === 'pay') {
+                    if (data?.course_id?.includes(JSON.parse(payObject).course_id)) {
+                        const response = await axios.post(
+                            `https://api-wather.plutus-fin.ru/api/bot/sendmanual?manualID=${
+                                JSON.parse(payObject).course_id
+                            }`
+                        );
+                        if (response.status === 200) {
+                            localStorage.removeItem('status_pay');
+                            close();
+                        }
+                    } else if (data?.manuals_id?.includes(JSON.parse(payObject).manuals_id)) {
+                        const response = await axios.post(
+                            `https://api-wather.plutus-fin.ru/api/bot/sendmanual?manualID=${
+                                JSON.parse(payObject).manuals_id
+                            }`
+                        );
+                        if (response.status === 200) {
+                            localStorage.removeItem('status_pay');
+                            close();
+                        }
+                    }
+                }
             }
         };
 
-        const payObject = localStorage.getItem('status_pay');
-        if (JSON.parse(payObject)?.pay_status === 'pay') {
-            fetchPayContent();
-            if (JSON.parse(payObject).course_id in courses) {
-                axios.post(
-                    `https://api-wather.plutus-fin.ru/api/bot/sendmanual?manualID=${JSON.parse(payObject).course_id}`
-                );
-                localStorage.removeItem('status_pay');
-                close();
-            } else if (JSON.parse(payObject).manuals_id in manuals) {
-                axios.post(
-                    `https://api-wather.plutus-fin.ru/api/bot/sendmanual?manualID=${JSON.parse(payObject).manuals_id}`
-                );
-                localStorage.removeItem('status_pay');
-                close();
-            }
-        }
+        fetchPayContent();
     }, [dispatch]);
 
     return (
