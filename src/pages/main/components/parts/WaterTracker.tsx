@@ -51,8 +51,10 @@ export const WaterTracker = () => {
 
         if (!currentUser.data?.wather_block) {
             setAllowToScrollSlider(false);
+            setInviteFriend(true);
         } else {
             setAllowToScrollSlider(true);
+            setInviteFriend(false);
         }
 
         fetchInitialData();
@@ -83,16 +85,7 @@ export const WaterTracker = () => {
     };
 
     const handleAddGlassClick = async () => {
-        const fetchGetWater = async () => {
-            if (!currentUser.data.wather_block) {
-                setInviteFriend(true);
-                return;
-            } else {
-                setInviteFriend(false);
-            }
-        };
-
-        if (currentUser.data) fetchGetWater();
+        if (inviteFriend) return;
 
         const diff = localSliderValue - prevSliderValue;
 

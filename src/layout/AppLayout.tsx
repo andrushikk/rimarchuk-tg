@@ -1,4 +1,4 @@
-import { Suspense, useEffect } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
 
@@ -6,6 +6,7 @@ import { ThunkDispatch } from '@reduxjs/toolkit';
 
 import axios from '@/axios';
 import { Loader } from '@/components/Loader';
+import { LoadingStatus } from '@/constants';
 import { authToken } from '@/store/authSlice';
 import { getCheckPay } from '@/store/checkPaySlice';
 import { useTelegram } from '@/utils/hooks/useTelegram';
@@ -17,7 +18,8 @@ export const AppLayout = () => {
     const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
     const userId: number = initDataUnsafe?.user?.id;
     const payObject = localStorage.getItem('status_pay');
-    const { data } = useSelector((state: any) => state.checkPay);
+    const { data, status } = useSelector((state: any) => state.checkPay);
+    const [manualSent, setManualSent] = useState(false);
 
     useEffect(() => {
         const fetchToken = async () => {
@@ -29,36 +31,37 @@ export const AppLayout = () => {
 
     useEffect(() => {
         const fetchPayContent = async () => {
-            const response = await dispatch(getCheckPay());
-            if (getCheckPay.fulfilled.match(response)) {
-                if (JSON.parse(payObject)?.pay_status === 'pay') {
-                    if (data?.course_id?.includes(JSON.parse(payObject).course_id)) {
-                        const response = await axios.post(
-                            `https://api-wather.plutus-fin.ru/api/bot/sendmanual?manualID=${
-                                JSON.parse(payObject).course_id
-                            }`
-                        );
-                        if (response.status === 200) {
-                            localStorage.removeItem('status_pay');
-                            close();
-                        }
-                    } else if (data?.manuals_id?.includes(JSON.parse(payObject).manuals_id)) {
-                        const response = await axios.post(
-                            `https://api-wather.plutus-fin.ru/api/bot/sendmanual?manualID=${
-                                JSON.parse(payObject).manuals_id
-                            }`
-                        );
-                        if (response.status === 200) {
-                            localStorage.removeItem('status_pay');
-                            close();
-                        }
-                    }
+            if (manualSent) return;
+
+            const payObjectParsed = JSON.parse(payObject);
+
+            if (payObjectParsed?.pay_status === 'pay') {
+                let response;
+                if (data.course_id.includes(payObjectParsed.course_id)) {
+                    response = await axios.post(
+                        `https://api-wather.plutus-fin.ru/api/bot/sendmanual?manualID=${payObjectParsed.course_id}`
+                    );
+                } else if (data.manuals_id.includes(payObjectParsed.manuals_id)) {
+                    response = await axios.post(
+                        `https://api-wather.plutus-fin.ru/api/bot/sendmanual?manualID=${payObjectParsed.manuals_id}`
+                    );
+                }
+
+                setManualSent(true);
+
+                if (response?.status === 200) {
+                    localStorage.removeItem('status_pay');
+                    close();
                 }
             }
         };
 
-        fetchPayContent();
-    }, [dispatch]);
+        if (status === LoadingStatus.none && userId) {
+            dispatch(getCheckPay());
+        } else if (status === LoadingStatus.fulfilled && payObject && !manualSent) {
+            fetchPayContent();
+        }
+    }, [status, dispatch, userId, payObject, manualSent, close]);
 
     return (
         <div className={css.layout}>
