@@ -6,14 +6,17 @@ import { ThunkDispatch } from '@reduxjs/toolkit';
 
 import axios from '@/axios';
 import { Loader } from '@/components/Loader';
+import { Modal } from '@/components/Modal';
 import { LoadingStatus } from '@/constants';
 import { getAffirmationAll } from '@/store/affirmationSlice';
 import { authToken } from '@/store/authSlice';
 import { getCheckPay } from '@/store/checkPaySlice';
+import { openModal, setOpen } from '@/store/modalsSlice';
 import { addNewUser, getUsersAll } from '@/store/userSlice';
 import { getVideosAll } from '@/store/videosSlice';
 import { useTelegram } from '@/utils/hooks/useTelegram';
 import { AllUsers, UserResponse } from '@/utils/types';
+import { ModalsResponse } from '@/utils/types/modals';
 
 import css from './AppLayout.module.scss';
 
@@ -25,7 +28,9 @@ export const AppLayout = () => {
     const payObject = localStorage.getItem('status_pay');
     const { data, status } = useSelector((state: any) => state.checkPay);
     const [manualSent, setManualSent] = useState(false);
+    const [show, setShow] = useState(false);
     const allUsers: AllUsers = useSelector((state: UserResponse) => state.user);
+    const isShow = useSelector((state: ModalsResponse) => state.modals.firstShow);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -38,6 +43,8 @@ export const AppLayout = () => {
                 await dispatch(authToken(Number(userId)));
                 const isIdExists = allUsers.data.some((user) => +user.user_id === +userId);
                 if (!isIdExists) {
+                    setShow(true);
+                    dispatch(setOpen(show));
                     await dispatch(addNewUser({ user_id: +userId, user_name: userName }));
                 } else {
                     await dispatch(getAffirmationAll());
@@ -91,6 +98,14 @@ export const AppLayout = () => {
         }
     }, [status, dispatch, userId, payObject, manualSent, close]);
 
+    useEffect(() => {
+        const isAlreadyShowModals = localStorage.getItem('SHOWALLMODALS');
+        if (!isShow && isAlreadyShowModals !== 'true') {
+            dispatch(openModal('ONBOARDINGTASKS'));
+            localStorage.setItem('SHOWALLMODALS', 'true');
+        }
+    }, [isShow, dispatch]);
+
     return (
         <div className={css.layout}>
             {/*{!videoPlayed && (*/}
@@ -111,6 +126,7 @@ export const AppLayout = () => {
                 <Outlet />
             </Suspense>
             {/*)}*/}
+            <Modal />
         </div>
     );
 };
