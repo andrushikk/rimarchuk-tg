@@ -61,6 +61,11 @@
       url("../../../../assets/images/podcastsCard/podcastTwo.png") center center / cover no-repeat;
     }
 
+    &[data-index="10"] {
+      background:  radial-gradient(circle at top left, #242C7F, #22266D 10%, transparent 65%),
+      url("../../../../assets/images/podcastsCard/pravpit.png") center center / cover no-repeat;
+    }
+
     .cardTitle {
       color: #C2C5F3;
       font-size: 12px;

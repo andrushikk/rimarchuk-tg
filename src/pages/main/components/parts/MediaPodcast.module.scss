@@ -54,4 +54,9 @@
     background:  radial-gradient(circle at top left, #242C7F, #242C7F 15%, transparent 45%),
     url("../../../../assets/images/podcastsCard/podcastTwo.png") center center / cover no-repeat
   }
+
+  &[data-index="11"] {
+    background:  radial-gradient(circle at top left, #242C7F, #22266D 10%, transparent 65%),
+    url("../../../../assets/images/podcastsCard/pravpit.png") center center / cover no-repeat;
+  }
 }

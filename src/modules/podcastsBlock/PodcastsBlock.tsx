@@ -83,6 +83,13 @@ export const data: IMedia[] = [
         time: '07:11',
         image: '',
     },
+    {
+        id: 11,
+        name: 'Правильное питание для детей',
+        url: 'https://content-water.plutus-fin.ru/music/20240925_171705665%20(1).mp3',
+        time: '10:24',
+        image: '',
+    },
 ];
 
 export const PodcastsBlock: FC<PodcastsBlockProps> = () => {
