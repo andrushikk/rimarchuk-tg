@@ -20,7 +20,13 @@ export const BookCard: FC<BookCardProps> = (props) => {
                 <div className={css.bookTitle}>{title}</div>
                 <div className={css.bookDescription}>{description}</div>
                 <Link
-                    to={link ? 'https://t.me/+zI-uvJD24Og2ODVi\n' : `/book/${id}`}
+                    to={
+                        id === '1'
+                            ? 'http://doctor_marina_rimarchuk.tilda.ws/anketa'
+                            : link
+                            ? 'https://t.me/+zI-uvJD24Og2ODVi\n'
+                            : `/book/${id}`
+                    }
                     className={css.linkBook}
                     onClick={onClick}
                 >

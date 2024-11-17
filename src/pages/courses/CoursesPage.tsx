@@ -1,13 +1,13 @@
-import { FC } from 'react'
+import { FC } from 'react';
 
-import meditationImage from '@/assets/images/courses/meditation.png'
-import { HeaderPage } from '@/modules/header/components/HeaderPage'
-import { Menu } from '@/modules/menu/Menu'
-import { useBackButton } from '@/utils/hooks/useBackButton'
-import { ICourses } from '@/utils/types/courses'
+import meditationImage from '@/assets/images/courses/meditation.png';
+import { HeaderPage } from '@/modules/header/components/HeaderPage';
+import { Menu } from '@/modules/menu/Menu';
+import { useBackButton } from '@/utils/hooks/useBackButton';
+import { ICourses } from '@/utils/types/courses';
 
-import css from './CoursesPage.module.scss'
-import { CoursesCard } from './component/parts/CoursesCard'
+import css from './CoursesPage.module.scss';
+import { CoursesCard } from './component/parts/CoursesCard';
 
 export type CoursesPageProps = {
     isPage?: boolean;
@@ -16,11 +16,11 @@ export type CoursesPageProps = {
 export const dataCourses: ICourses[] = [
     {
         id: '1',
-        title: 'Бесплатные курсы',
+        title: 'БЕСПЛАТНЫЕ КУРСЫ: СКОРО💜',
         card: [
             {
-                title: 'Тело - храм. Как правильно эксплуатировать свое тело:',
-                description: 'Уроков: 6',
+                title: 'СКОРО💜',
+                description: '',
                 price: 7777,
                 buttonText: 'Стоимость курса',
                 image: meditationImage,

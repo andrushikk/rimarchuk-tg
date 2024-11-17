@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import bookOneSrc from '@/assets/images/bookBlock/book.png';
+import bookFiveSrc from '@/assets/images/bookBlock/bookFive.png';
 import bookFourSrc from '@/assets/images/bookBlock/bookFour.png';
-import bookThree from '@/assets/images/bookBlock/bookThree.png';
 import bookTwoSrc from '@/assets/images/bookBlock/bookTwo.png';
 import CardSlider from '@/modules/slider/CardSlider';
 import { IBookBlock } from '@/utils/types/book';
@@ -11,6 +10,37 @@ import css from './BookBlock.module.scss';
 import { BookCard } from './parts/BookCard';
 
 export const data: IBookBlock[] = [
+    {
+        id: '1',
+        book: true,
+        title: <div>Курс «ЗДОРОВЫЕ ДЕТИ» от Доктора Марины Римарчук</div>,
+        content: [
+            {
+                contentTitle: '',
+                contentInfo: '',
+                contentList: [
+                    {
+                        title: 'разбор/назначение анализов',
+                    },
+                    {
+                        title: 'индивидуальный подбор схемы восстановления здоровья',
+                    },
+                    {
+                        title: 'рекомендации по витаминам и добавкам',
+                    },
+                    {
+                        title: 'рекомендации по питанию',
+                    },
+                ],
+                descriptionPrice: 'Стоимость печатной книги + консультации',
+                price: '5 990',
+                buttonText: 'Стоимость печатной книги + консультации',
+                buttonBuy: 'Sold out',
+            },
+        ],
+        description: 'Здоровые дети - Ваша новая реальность!',
+        image: bookFiveSrc,
+    },
     {
         id: '2',
         link: false,
