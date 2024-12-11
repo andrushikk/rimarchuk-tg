@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from 'react';
+import { FC, ReactNode } from 'react';
 import { Link, useMatch } from 'react-router-dom';
 
 import cs from 'classnames';
@@ -37,7 +37,7 @@ export const CourseShowInfo: FC<CourseShowInfoProps> = () => {
 
     const lesson: ICourseCard | undefined = card?.lesson?.find((entry) => +entry.id === id);
 
-    const lastLesson = card.lesson.slice(-1)[0];
+    const lastLesson = card?.lesson?.slice(-1)[0];
     /*  console.log(lastLesson.id, 'lastLesson.id');
     console.log(id, 'id');
     console.log(lastLesson.id === id, 'lastLesson.id === id');*/
@@ -48,7 +48,7 @@ export const CourseShowInfo: FC<CourseShowInfoProps> = () => {
             <div className={css.courseShowTitle}>{lesson?.title}</div>
             <div className={cs(css.courseShowVideo)}>
                 {lesson.url ? (
-                    <VideoPlayer videoUrl={lesson.url} width={'360px'} height={'202px'} />
+                    <VideoPlayer videoUrl={lesson?.url} width={'360px'} height={'202px'} />
                 ) : (
                     <div>Здесь скоро будет видео</div>
                 )}

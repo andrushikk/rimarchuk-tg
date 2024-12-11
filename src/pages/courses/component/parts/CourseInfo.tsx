@@ -1,4 +1,4 @@
-import React, { FC, ReactNode, useEffect, useState } from 'react';
+import { FC, ReactNode, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useMatch } from 'react-router-dom';
 
@@ -6,14 +6,15 @@ import { ThunkDispatch } from '@reduxjs/toolkit';
 import cs from 'classnames';
 import Cookies from 'js-cookie';
 
-import imageSrc from '@/assets/images/course/avatar.png';
 import LockIcon from '@/assets/images/course/lock.svg';
 import PlayIcon from '@/assets/images/course/play.svg';
 import { InfoBuy } from '@/modules/infoBuy/InfoBuy';
 import { getCheckPay } from '@/store/checkPaySlice';
+import { getLessonsByCourseId } from '@/store/lessonSlice';
 import { useBackButton } from '@/utils/hooks/useBackButton';
+import { GetLessonsResponse } from '@/utils/types';
 import { ICourseCard } from '@/utils/types/courses';
-import { DataCheckPay, GetCheckPay, GetCheckPayResponse } from '@/utils/types/pay';
+import { GetCheckPayResponse } from '@/utils/types/pay';
 
 import { dataCourses } from '../../CoursesPage';
 import css from './CourseInfo.module.scss';
@@ -38,6 +39,7 @@ export const CourseInfo: FC<CourseInfoProps> = () => {
     const card: ICourseCard | undefined = dataCourses.flatMap((course) => course.card).find((item) => +item.id === id);
     console.log(matchCard, 'matchCard');
 
+    const lessons = useSelector((state: GetLessonsResponse) => state.lessons.data);
     const course_id = useSelector((state: GetCheckPayResponse) => state.checkPay.data.course_id);
 
     useEffect(() => {
@@ -50,6 +52,13 @@ export const CourseInfo: FC<CourseInfoProps> = () => {
         };
 
         fetchCheckPay();
+    }, [id, dispatch]);
+
+    useEffect(() => {
+        const fetchLessonsByCourseId = async () => {
+            await dispatch(getLessonsByCourseId(id));
+        };
+        fetchLessonsByCourseId();
     }, [id, dispatch]);
 
     useEffect(() => {
@@ -72,32 +81,68 @@ export const CourseInfo: FC<CourseInfoProps> = () => {
         <>
             <InfoBuy infoBuy={card} isShowCourse={true} id={id}>
                 <div className={css.coursesWrapper}>
-                    {card?.lesson?.map((entry) => (
-                        <Link
-                            key={entry.id}
-                            to={`/course/card/${id}/show/${entry.id}`}
-                            className={cs(
-                                css.courseInfoCard,
-                                !isIdInCourseIdList && id !== 5 ? css.courseCardBlock : ''
-                            )}
-                            onClick={(e) => {
-                                if (!isIdInCourseIdList && id !== 5) {
-                                    e.preventDefault();
-                                }
-                            }}
-                        >
-                            <div>
-                                <img src={imageSrc} className={css.courseInfoIcon} alt="avatar" />
-                            </div>
-                            <div className={css.courseInfoText}>
-                                <div className={css.courseInfoDescription}>{entry?.description}</div>
-                                <div className={css.courseInfoTitle}>{entry?.title}</div>
-                            </div>
-                            <div className={css.coursePlayIcon}>
-                                {isIdInCourseIdList || id === 5 ? <PlayIcon /> : <LockIcon />}
-                            </div>
-                        </Link>
-                    ))}
+                    {id === 1
+                        ? lessons.map((entry) => (
+                              <Link
+                                  key={entry.id}
+                                  to={`/course/card/${id}/show/${entry.id}`}
+                                  className={cs(css.courseInfoCard, entry.is_Blocked === 1 ? css.courseCardBlock : '')}
+                                  onClick={(e) => {
+                                      if (entry.is_Blocked === 1) {
+                                          e.preventDefault();
+                                      }
+                                  }}
+                              >
+                                  <div>
+                                      <img
+                                          src={entry.lesson_pic}
+                                          className={css.courseInfoIcon}
+                                          alt="avatar"
+                                          width={80}
+                                          height={60}
+                                      />
+                                  </div>
+                                  <div className={css.courseInfoText}>
+                                      <div className={css.courseInfoDescription}>{entry?.lesson_desc}</div>
+                                      <div className={css.courseInfoTitle}>{entry?.lesson_name}</div>
+                                  </div>
+                                  <div className={css.coursePlayIcon}>
+                                      {entry.is_Blocked === 0 ? <PlayIcon /> : <LockIcon />}
+                                  </div>
+                              </Link>
+                          ))
+                        : card?.lesson?.map((entry) => (
+                              <Link
+                                  key={entry.id}
+                                  to={`/course/card/${id}/show/${entry.id}`}
+                                  className={cs(
+                                      css.courseInfoCard,
+                                      !isIdInCourseIdList && id !== 5 ? css.courseCardBlock : ''
+                                  )}
+                                  onClick={(e) => {
+                                      if (!isIdInCourseIdList && id !== 5) {
+                                          e.preventDefault();
+                                      }
+                                  }}
+                              >
+                                  <div>
+                                      <img
+                                          src={entry.image}
+                                          className={css.courseInfoIcon}
+                                          alt="avatar"
+                                          width={80}
+                                          height={60}
+                                      />
+                                  </div>
+                                  <div className={css.courseInfoText}>
+                                      <div className={css.courseInfoDescription}>{entry?.description}</div>
+                                      <div className={css.courseInfoTitle}>{entry?.title}</div>
+                                  </div>
+                                  <div className={css.coursePlayIcon}>
+                                      {isIdInCourseIdList || id === 5 ? <PlayIcon /> : <LockIcon />}
+                                  </div>
+                              </Link>
+                          ))}
                 </div>
             </InfoBuy>
         </>

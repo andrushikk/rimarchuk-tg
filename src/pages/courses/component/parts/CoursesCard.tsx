@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { Link } from 'react-router-dom';
 
 import ArrowRight from '@/assets/images/courses/arrowRight.svg';
@@ -20,8 +20,8 @@ export const CoursesCard: FC<CoursesCardProps> = (props) => {
     return (
         <div className={css.coursesWrapper}>
             <div className={css.coursesTitle}>{title}</div>
-            {/* {card?.map((entry) => (
-                <div key={entry.id} className={css.courseCard}>
+            {card?.map((entry) => (
+                <Link key={entry.id} to={`/course/card/${entry.id}`} className={css.courseCard}>
                     <img src={entry.image} className={css.courseBackIcon} alt="iconCourse" />
                     <div className={css.courseText}>
                         <div className={css.title}>{entry?.title}</div>
@@ -30,8 +30,8 @@ export const CoursesCard: FC<CoursesCardProps> = (props) => {
                     <div className={css.courseIcon}>
                         <ArrowRight />
                     </div>
-                </div>
-            ))} */}
+                </Link>
+            ))}
         </div>
     );
 };

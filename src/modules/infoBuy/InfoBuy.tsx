@@ -226,7 +226,11 @@ export const InfoBuy: FC<InfoBuyProps> = (props) => {
                 </div>
             )}
             {isShowCourse && <div className={css.infoBuyChildrenCourse}>{children}</div>}
-            {infoBuy?.id !== '5' && !isIdInCourseIdList && !isIdInManualIdList && !isShowManual ? (
+            {infoBuy?.id !== '5' &&
+            infoBuy?.id !== '1' &&
+            !isIdInCourseIdList &&
+            !isIdInManualIdList &&
+            !isShowManual ? (
                 <div className={css.contentCostPrice}>
                     <div className={css.content}>{(infoBuy as ICourseCard)?.buttonText}</div>
                     <div className={css.contentPrice}>{(infoBuy as ICourseCard)?.price} ₽</div>
@@ -238,7 +242,11 @@ export const InfoBuy: FC<InfoBuyProps> = (props) => {
                     <div className={css.contentPrice}>{(infoBuy as Manuals)?.cost} ₽</div>
                 </div>
             ) : null}
-            {infoBuy?.id !== '5' && !isIdInCourseIdList && !isIdInManualIdList && !isShowManual ? (
+            {infoBuy?.id !== '5' &&
+            infoBuy?.id !== '1' &&
+            !isIdInCourseIdList &&
+            !isIdInManualIdList &&
+            !isShowManual ? (
                 <Link
                     to={{
                         pathname: `/delivery/${id}`,
