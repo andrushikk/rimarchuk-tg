@@ -8,7 +8,7 @@ export interface ILesson {
     image?: string;
     id: string | number;
     open?: boolean;
-    url?: string;
+    lesson_video?: string;
 }
 
 export interface ICourseCard {
@@ -28,7 +28,7 @@ export interface ICourseCard {
     price?: number;
     buy?: boolean;
     lesson?: ILesson[];
-    url?: string;
+    lesson_video?: string;
     id: string | number;
 }
 

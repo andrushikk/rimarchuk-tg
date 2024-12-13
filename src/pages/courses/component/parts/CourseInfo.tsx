@@ -84,11 +84,11 @@ export const CourseInfo: FC<CourseInfoProps> = () => {
                     {id === 1
                         ? lessons.map((entry) => (
                               <Link
-                                  key={entry.id}
-                                  to={`/course/card/${id}/show/${entry.id}`}
-                                  className={cs(css.courseInfoCard, entry.is_Blocked === 1 ? css.courseCardBlock : '')}
+                                  key={entry?.id}
+                                  to={`/course/card/${id}/show/${entry?.id}`}
+                                  className={cs(css.courseInfoCard, entry?.is_Blocked === 1 ? css.courseCardBlock : '')}
                                   onClick={(e) => {
-                                      if (entry.is_Blocked === 1) {
+                                      if (entry?.is_Blocked === 1) {
                                           e.preventDefault();
                                       }
                                   }}
